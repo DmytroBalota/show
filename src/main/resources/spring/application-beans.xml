@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 
-	<bean name="userService" class="com.dbalota.show.services.impl.UserServiceImpl"></bean>
+	<import resource="services-beans.xml" />
 
 	<bean name="app" class="com.dbalota.show.App">
 		<property name="userService" ref="userService"></property>
