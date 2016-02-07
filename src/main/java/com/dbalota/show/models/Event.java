@@ -1,7 +1,98 @@
 package com.dbalota.show.models;
 
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by Dmytro_Balota on 2/5/2016.
  */
 public class Event {
+
+	public enum Raiting {
+		HIGH, MID, LOW;
+	}
+
+	private String name;
+	private double price;
+	/* in minutes */
+	private int duration;
+	private Raiting raiting;
+
+	private Map<Date, Auditorium> auditoriumAndDates = new HashMap<Date, Auditorium>();
+
+	public Map<Date, Auditorium> getAuditoriumAndDates() {
+		return auditoriumAndDates;
+	}
+
+	public Event(String name) {
+		super();
+		this.name = name;
+	}
+
+	public int getDuration() {
+		return duration;
+	}
+
+	public void setDuration(int duration) {
+		this.duration = duration;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+	public Raiting getRaiting() {
+		return raiting;
+	}
+
+	public void setRaiting(Raiting raiting) {
+		this.raiting = raiting;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Event other = (Event) obj;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Event [name=" + name + ", price=" + price + ", duration=" + duration + ", raiting=" + raiting
+				+ ", auditoriumAndDates=" + auditoriumAndDates + "]";
+	}
+
+	
+
 }

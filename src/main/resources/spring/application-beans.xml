@@ -4,10 +4,13 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 
+	<import resource="dao-beans.xml" />
 	<import resource="services-beans.xml" />
 
 	<bean name="app" class="com.dbalota.show.App">
 		<property name="userService" ref="userService"></property>
+		<property name="eventService" ref="eventService"></property>
+		<property name="auditoriumService" ref="auditoriumService"></property>
 	</bean>
 	
 </beans>

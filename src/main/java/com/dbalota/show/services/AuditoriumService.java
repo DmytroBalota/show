@@ -1,16 +1,17 @@
 package com.dbalota.show.services;
 
-import com.dbalota.show.models.Auditorium;
+import java.util.Map;
+import java.util.Set;
 
-import java.util.List;
+import com.dbalota.show.models.Auditorium;
 
 /**
  * Created by Dmytro_Balota on 2/5/2016.
  */
 public interface AuditoriumService {
-    List<Auditorium> getAuditoriums();
+    Map<String, Auditorium> getAuditoriums();
 
-    int getSeatsNumber();
+    int getSeatsNumber(String auditoriumName);
 
-    int getVipSeats();
+    int getVipSeats(String auditoriumName);
 }
