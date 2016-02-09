@@ -1,13 +1,34 @@
 package com.dbalota.show.models;
 
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
+
 public class User {
 	private long id;
 	private String firstName;
 	private String lastName;
 	private String email;
-	
-	
-	
+	private Date birthday;
+
+	private List<Ticket> tickets = new LinkedList<>();
+
+	public List<Ticket> getTickets() {
+		return tickets;
+	}
+
+	public void setTickets(List<Ticket> tickets) {
+		this.tickets = tickets;
+	}
+
+	public Date getBirthday() {
+		return birthday;
+	}
+
+	public void setBirthday(Date birthday) {
+		this.birthday = birthday;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -45,11 +66,12 @@ public class User {
 		return true;
 	}
 
-	public User(String firstName, String lastName, String email, long id) {
+	public User(String firstName, String lastName, String email, Date birthday, long id) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
+		this.birthday = birthday;
 		this.id = id;
 	}
 	

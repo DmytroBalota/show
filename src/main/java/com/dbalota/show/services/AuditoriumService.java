@@ -13,5 +13,5 @@ public interface AuditoriumService {
 
     int getSeatsNumber(String auditoriumName);
 
-    int getVipSeats(String auditoriumName);
+    Set<Integer> getVipSeats(String auditoriumName);
 }

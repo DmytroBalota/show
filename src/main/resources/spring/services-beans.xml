@@ -15,4 +15,8 @@
 		<constructor-arg ref="auditoriumDao"></constructor-arg>
 	</bean>
 
+	<import resource="discount-beans.xml" />
+
+	<bean name="bookingService" class="com.dbalota.show.services.impl.BookingServiceImpl" autowire="constructor">
+	</bean>
 </beans>

@@ -1,6 +1,7 @@
 package com.dbalota.show.services.impl;
 
 import java.util.Map;
+import java.util.Set;
 
 import com.dbalota.show.dao.AuditoriumDao;
 import com.dbalota.show.models.Auditorium;
@@ -22,8 +23,8 @@ public class AuditoriumServiceImpl implements AuditoriumService {
 		return auditoriumDao.getAuditoriums().get(auditoriumName).getSeatsNumber();
 	}
 
-	public int getVipSeats(String auditoriumName) {
-		return auditoriumDao.getAuditoriums().get(auditoriumName).getVipSeatsNumber();
+	public Set<Integer> getVipSeats(String auditoriumName) {
+		return auditoriumDao.getAuditoriums().get(auditoriumName).getVipSeats();
 	}
 
 }

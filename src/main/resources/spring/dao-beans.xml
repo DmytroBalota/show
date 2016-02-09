@@ -1,10 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:util="http://www.springframework.org/schema/util"
+	   xmlns:p="http://www.springframework.org/schema/p"
+	   xmlns:c="http://www.springframework.org/schema/c"
+	   xsi:schemaLocation="
+ 		http://www.springframework.org/schema/beans
+ 		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+ 		http://www.springframework.org/schema/util
+ 		http://www.springframework.org/schema/util/spring-util-3.2.xsd">
+
+
+
 
 	<bean name="userDao" class="com.dbalota.show.dao.UserDao"></bean>
 	<bean name="eventDao" class="com.dbalota.show.dao.EventDao"></bean>
-	<bean name="auditoriumDao" class="com.dbalota.show.dao.AuditoriumDao"></bean>
+	<bean name="bookingDao" class="com.dbalota.show.dao.BookingDao"></bean>
+
+	<util:properties id="auditorium1"
+					 location="classpath:auditorium1.properties"/>
+
+	<bean name="auditoriumDao" class="com.dbalota.show.dao.AuditoriumDao">
+		<constructor-arg>
+			<list>
+				<ref bean="auditorium1" />
+			</list>
+		</constructor-arg>
+	</bean>
 
 </beans>
