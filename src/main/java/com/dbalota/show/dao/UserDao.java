@@ -46,9 +46,4 @@ public class UserDao {
 		}
 		return list;
 	}
-
-	public List<Ticket> getBookedTickets() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

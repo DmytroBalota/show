@@ -34,7 +34,7 @@ public class Main {
         event.setRaiting(Event.Raiting.HIGH);
         Date date = null;
         try {
-            date = df.parse("2016-02-14T12:00");
+            date = df.parse("2016-11-05T12:00");
         } catch (ParseException e) {
             LOG.error(String.format("Wrong dated format. Thr correct date format is %s", DATE_FORMAT));
         }
@@ -55,21 +55,24 @@ public class Main {
         }
         app.getUserService().register(user);
 
+        System.out.println(user);
+
         //booking service
         Set<Integer> seats = new HashSet<>();
         seats.add(1);
         seats.add(50);
         double price = app.getBookingService().getTicketPrice(event, date, seats, user);
-        System.out.println(price);
+        System.out.println("PRICE = " + price);
 
         for (Integer seat : seats) {
             Ticket ticket = new Ticket();
             ticket.setAuditorium(event.getAuditoriumAndDates().get(date));
             ticket.setDate(date);
             ticket.setSeat(seat);
+            ticket.setPrice(app.getBookingService().getTicketPrice(event, date, seat, user));
             app.getBookingService().bookTicket(user, ticket);
         }
 
-        System.out.println(app.getBookingService().getTicketsForEvent(event, date));
+        System.out.println("Booked tickets:" + app.getBookingService().getTicketsForEvent(event, date));
     }
 }

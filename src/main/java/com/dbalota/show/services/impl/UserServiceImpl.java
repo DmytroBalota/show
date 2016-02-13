@@ -8,35 +8,35 @@ import com.dbalota.show.services.UserService;
 import java.util.List;
 
 public class UserServiceImpl implements UserService {
-	
-	private UserDao userDao;
-	
-	private UserServiceImpl(UserDao userDao){
-		this.userDao = userDao;
-	}
 
-	public void register(User user) {
-		userDao.add(user);	
-	}
+    private UserDao userDao;
 
-	public void remove(User user) {
+    private UserServiceImpl(UserDao userDao) {
+        this.userDao = userDao;
+    }
 
-	}
+    public void register(User user) {
+        userDao.add(user);
+    }
 
-	public User getById(long id) {
-		return userDao.getById(id);
-	}
+    public void remove(User user) {
+        userDao.remove(user);
+    }
 
-	public User getUserByEmail(String email) {
-		return userDao.getUserByEmail(email);
-	}
+    public User getById(long id) {
+        return userDao.getById(id);
+    }
 
-	public List<User> getUsersByName(String name) {
-		return userDao.getUsersByName(name);
-	}
+    public User getUserByEmail(String email) {
+        return userDao.getUserByEmail(email);
+    }
 
-	public List<Ticket> getBookedTickets() {
-		return null;
-	}
+    public List<User> getUsersByName(String name) {
+        return userDao.getUsersByName(name);
+    }
+
+    public List<Ticket> getBookedTickets(User user) {
+        return user.getTickets();
+    }
 
 }

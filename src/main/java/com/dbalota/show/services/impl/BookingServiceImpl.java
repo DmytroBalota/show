@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.dbalota.show.dao.BookingDao;
+import com.dbalota.show.models.Auditorium;
 import com.dbalota.show.models.Event;
 import com.dbalota.show.models.Ticket;
 import com.dbalota.show.models.User;
@@ -21,7 +22,7 @@ public class BookingServiceImpl implements BookingService {
         this.bookingDao = bookingDao;
     }
 
-    public double getTicketPrice(Event event, Date date, Set<Integer> seats, User user) {
+    public double getTicketPrice(Event event, Date date, Integer seat, User user) {
         double calculatedPrice = 0;
         double discount = discountService.getDiscount(user, event, date);
         double price = event.getPrice();
@@ -30,12 +31,10 @@ public class BookingServiceImpl implements BookingService {
         }
         Set<Integer> vipSeats = event.getAuditoriumAndDates().get(date).getVipSeats();
 
-        for (Integer seat : seats) {
-            if (vipSeats.contains(seat)) {
-                calculatedPrice = calculatedPrice + price * 2;
-            } else {
-                calculatedPrice += price;
-            }
+        if (vipSeats.contains(seat)) {
+            calculatedPrice = calculatedPrice + price * 2;
+        } else {
+            calculatedPrice += price;
         }
 
         calculatedPrice = calculatedPrice - calculatedPrice * (discount / 100);
@@ -43,11 +42,27 @@ public class BookingServiceImpl implements BookingService {
         return calculatedPrice;
     }
 
-    public boolean bookTicket(User user, Ticket ticket) {
+    public double getTicketPrice(Event event, Date date, Set<Integer> seats, User user) {
+        double calculatedPrice = 0;
+        for (Integer seat : seats) {
+            calculatedPrice += getTicketPrice(event, date, seat, user);
+        }
+        return calculatedPrice;
+    }
 
+    public boolean bookTicket(User user, Ticket ticket) {
+        if (isAuditoriumFull(ticket.getAuditorium(), ticket.getDate())) return false;
         user.getTickets().add(ticket);
         bookingDao.bookTicket(ticket);
         return true;
+    }
+
+    private boolean isAuditoriumFull(Auditorium auditorium, Date date) {
+        List<Ticket> tickets = bookingDao.getPurchasedTickets(auditorium, date);
+        if (null != tickets && tickets.size() == auditorium.getSeatsNumber()) {
+            return true;
+        }
+        return false;
     }
 
     public List<Ticket> getTicketsForEvent(Event event, Date date) {
