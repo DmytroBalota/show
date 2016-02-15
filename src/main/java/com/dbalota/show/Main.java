@@ -44,7 +44,7 @@ public class Main {
             app.getEventService().create(event);
         }
 
-        System.out.println(event);
+        System.out.println(app.getEventService().getByName("Saw"));
 
         //create user
         User user = null;
@@ -56,6 +56,7 @@ public class Main {
         app.getUserService().register(user);
 
         System.out.println(user);
+
 
         //booking service
         Set<Integer> seats = new HashSet<>();

@@ -47,6 +47,7 @@ public class EventServiceImpl implements EventService {
 
 			for (Entry<Date, Auditorium> entry : e.getAuditoriumAndDates().entrySet()) {
 				if (entry.getValue().equals(auditorium))
+					// FIXME: 0.5% too complex condition
 					if ((date.getTime() >= entry.getKey().getTime()
 							&& date.getTime() <= (entry.getKey().getTime() + e.getDuration()))
 							|| (date.getTime() + event.getDuration()) >= entry.getKey().getTime() && (date.getTime()
