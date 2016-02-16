@@ -77,6 +77,7 @@ public class Main {
             ticket.setDate(date);
             ticket.setSeat(seat);
             price = app.getBookingService().getTicketPrice(event, date, seat);
+            discount = app.getDiscountService().getDiscount(user, event, date);
             price = price - price * (discount / 100);
             ticket.setPrice(price);
             app.getBookingService().bookTicket(user, ticket);
