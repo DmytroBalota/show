@@ -14,17 +14,14 @@ import com.dbalota.show.services.DiscountService;
 
 public class BookingServiceImpl implements BookingService {
 
-    private DiscountService discountService;
     private BookingDao bookingDao;
 
-    BookingServiceImpl(DiscountService discountService, BookingDao bookingDao) {
-        this.discountService = discountService;
+    BookingServiceImpl(BookingDao bookingDao) {
         this.bookingDao = bookingDao;
     }
 
-    public double getTicketPrice(Event event, Date date, Integer seat, User user) {
+    public double getTicketPrice(Event event, Date date, Integer seat) {
         double calculatedPrice = 0;
-        double discount = discountService.getDiscount(user, event, date);
         double price = event.getPrice();
         if (event.getRaiting() == Event.Raiting.HIGH) {
             price = price * 1.2;
@@ -37,21 +34,21 @@ public class BookingServiceImpl implements BookingService {
             calculatedPrice += price;
         }
 
-        calculatedPrice = calculatedPrice - calculatedPrice * (discount / 100);
-
         return calculatedPrice;
     }
 
-    public double getTicketPrice(Event event, Date date, Set<Integer> seats, User user) {
+    public double getTicketPrice(Event event, Date date, Set<Integer> seats) {
         double calculatedPrice = 0;
         for (Integer seat : seats) {
-            calculatedPrice += getTicketPrice(event, date, seat, user);
+            calculatedPrice += getTicketPrice(event, date, seat);
         }
         return calculatedPrice;
     }
 
     public boolean bookTicket(User user, Ticket ticket) {
-        if (isAuditoriumFull(ticket.getAuditorium(), ticket.getDate())) return false;
+        if (isAuditoriumFull(ticket.getAuditorium(), ticket.getDate())) {
+            return false;
+        }
         user.getTickets().add(ticket);
         bookingDao.bookTicket(ticket);
         return true;

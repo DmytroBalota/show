@@ -1,9 +1,6 @@
 package com.dbalota.show;
 
-import com.dbalota.show.services.AuditoriumService;
-import com.dbalota.show.services.BookingService;
-import com.dbalota.show.services.EventService;
-import com.dbalota.show.services.UserService;
+import com.dbalota.show.services.*;
 
 /**
  * Hello world!
@@ -18,6 +15,8 @@ public class App {
 	private AuditoriumService auditoriumService;
 
 	private BookingService bookingService;
+
+	private DiscountService discountService;
 
 	
 	public AuditoriumService getAuditoriumService() {
@@ -52,5 +51,11 @@ public class App {
 		this.bookingService = bookingService;
 	}
 
-	
+	public DiscountService getDiscountService() {
+		return discountService;
+	}
+
+	public void setDiscountService(DiscountService discountService) {
+		this.discountService = discountService;
+	}
 }

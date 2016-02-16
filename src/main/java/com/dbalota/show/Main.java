@@ -7,6 +7,8 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.dbalota.show.aspects.CounterAspect;
+import com.dbalota.show.aspects.DiscountAspect;
 import com.dbalota.show.models.Ticket;
 import com.dbalota.show.models.User;
 import org.apache.log4j.Logger;
@@ -44,7 +46,7 @@ public class Main {
             app.getEventService().create(event);
         }
 
-        System.out.println(app.getEventService().getByName("Saw"));
+        System.out.println("\nEvent:" + app.getEventService().getByName("Saw"));
 
         //create user
         User user = null;
@@ -55,25 +57,35 @@ public class Main {
         }
         app.getUserService().register(user);
 
-        System.out.println(user);
+        System.out.println("\nUser:" + user);
 
 
         //booking service
         Set<Integer> seats = new HashSet<>();
         seats.add(1);
         seats.add(50);
-        double price = app.getBookingService().getTicketPrice(event, date, seats, user);
-        System.out.println("PRICE = " + price);
+        double price = app.getBookingService().getTicketPrice(event, date, seats);
+        double discount = app.getDiscountService().getDiscount(user, event, date);
+        price = price - price * (discount / 100);
+
+        System.out.println("\nPRICE = " + price);
 
         for (Integer seat : seats) {
             Ticket ticket = new Ticket();
+            ticket.setEvent(event);
             ticket.setAuditorium(event.getAuditoriumAndDates().get(date));
             ticket.setDate(date);
             ticket.setSeat(seat);
-            ticket.setPrice(app.getBookingService().getTicketPrice(event, date, seat, user));
+            price = app.getBookingService().getTicketPrice(event, date, seat);
+            price = price - price * (discount / 100);
+            ticket.setPrice(price);
             app.getBookingService().bookTicket(user, ticket);
         }
 
-        System.out.println("Booked tickets:" + app.getBookingService().getTicketsForEvent(event, date));
+        System.out.println("\nBooked tickets:" + app.getBookingService().getTicketsForEvent(event, date));
+
+        System.out.println("\nStatistic:" + CounterAspect.getCounters());
+
+        System.out.println("\nNumber of received discounts:" + DiscountAspect.getUsersDiscountCount());
     }
 }

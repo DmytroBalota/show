@@ -13,9 +13,9 @@ import java.util.Set;
  */
 public interface BookingService {
 
-    double getTicketPrice(Event event, Date date, Set<Integer> seats, User user);
+    double getTicketPrice(Event event, Date date, Set<Integer> seats);
 
-    double getTicketPrice(Event event, Date date, Integer seats, User user);
+    double getTicketPrice(Event event, Date date, Integer seats);
 
     boolean bookTicket(User user, Ticket ticket);
 

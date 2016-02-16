@@ -10,6 +10,7 @@ public class Ticket {
     private Auditorium auditorium;
     private Date date;
     private int seat;
+    private Event event;
 
     @Override
     public String toString() {
@@ -51,5 +52,13 @@ public class Ticket {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public Event getEvent() {
+        return event;
+    }
+
+    public void setEvent(Event event) {
+        this.event = event;
     }
 }

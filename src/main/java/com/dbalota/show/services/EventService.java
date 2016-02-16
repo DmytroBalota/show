@@ -15,7 +15,6 @@ public interface EventService {
     // FIXME: 0.5% never used
     void remove(Event event);
 
-    // FIXME: 0.5% never used
     Event getByName(String name);
 
     // FIXME: 0.5% never used
