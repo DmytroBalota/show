@@ -9,90 +9,102 @@ import java.util.Map;
  */
 public class Event {
 
-	public enum Raiting {
-		HIGH, MID, LOW;
-	}
+    public Event(String name) {
+        this.name = name;
+    }
 
-	private String name;
-	private double price;
-	/* in minutes */
-	private int duration;
-	private Raiting raiting;
+    public enum Raiting {
+        HIGH, MID, LOW;
+    }
 
-	private Map<Date, Auditorium> auditoriumAndDates = new HashMap<Date, Auditorium>();
+    private int id;
 
-	public Map<Date, Auditorium> getAuditoriumAndDates() {
-		return auditoriumAndDates;
-	}
+    private String name;
+    private double price;
+    /* in minutes */
+    private int duration;
+    private Raiting raiting;
 
-	public Event(String name) {
-		super();
-		this.name = name;
-	}
+    public Event(String name, double price, int duration, Raiting raiting, int id) {
+        this(name, price, duration, raiting);
+        this.id = id;
+    }
 
-	public int getDuration() {
-		return duration;
-	}
+    public Event(String name, double price, int duration, Raiting raiting) {
+        this.name = name;
+        this.price = price;
+        this.duration = duration;
+        this.raiting = raiting;
+    }
 
-	public void setDuration(int duration) {
-		this.duration = duration;
-	}
+    public int getDuration() {
+        return duration;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public double getPrice() {
-		return price;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setPrice(double price) {
-		this.price = price;
-	}
+    public double getPrice() {
+        return price;
+    }
 
-	public Raiting getRaiting() {
-		return raiting;
-	}
+    public void setPrice(double price) {
+        this.price = price;
+    }
 
-	public void setRaiting(Raiting raiting) {
-		this.raiting = raiting;
-	}
+    public Raiting getRaiting() {
+        return raiting;
+    }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		return result;
-	}
+    public void setRaiting(Raiting raiting) {
+        this.raiting = raiting;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Event other = (Event) obj;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		return true;
-	}
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((name == null) ? 0 : name.hashCode());
+        return result;
+    }
 
-	@Override
-	public String toString() {
-		return "Event [name=" + name + ", price=" + price + ", duration=" + duration + ", raiting=" + raiting
-				+ ", auditoriumAndDates=" + auditoriumAndDates + "]";
-	}
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Event other = (Event) obj;
+        if (name == null) {
+            if (other.name != null)
+                return false;
+        } else if (!name.equals(other.name))
+            return false;
+        return true;
+    }
 
-	
+    @Override
+    public String toString() {
+        return "Event [name=" + name + ", price=" + price + ", duration=" + duration + ", raiting=" + raiting
+                + "]";
+    }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

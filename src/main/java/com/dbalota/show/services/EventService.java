@@ -1,6 +1,7 @@
 package com.dbalota.show.services;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import com.dbalota.show.models.Auditorium;
@@ -10,21 +11,20 @@ import com.dbalota.show.models.Event;
  * Created by Dmytro_Balota on 2/5/2016.
  */
 public interface EventService {
-    void create(Event event);
+    boolean create(Event event);
 
-    // FIXME: 0.5% never used
     void remove(Event event);
 
     Event getByName(String name);
 
-    // FIXME: 0.5% never used
-    Set<Event> getAll();
+    List<Event> getAll();
+
+    List<Event> getForDateRange(Date from, Date to);
 
     // FIXME: 0.5% never used
-    Set<Event> getForDateRange(Date from, Date to);
-
-    // FIXME: 0.5% never used
-    Set<Event> getNextEvents(Date to);
+    List<Event> getNextEvents(Date to);
 
     boolean assignAuditorium(Event event, Auditorium auditorium, Date date);
+
+    String getAuditoriumName(long eventId, Date date);
 }

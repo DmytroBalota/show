@@ -9,15 +9,20 @@ import com.dbalota.show.models.Auditorium;
 import com.dbalota.show.models.Event;
 import com.dbalota.show.models.Ticket;
 import com.dbalota.show.models.User;
+import com.dbalota.show.services.AuditoriumService;
 import com.dbalota.show.services.BookingService;
 import com.dbalota.show.services.DiscountService;
+import com.dbalota.show.services.EventService;
 
 public class BookingServiceImpl implements BookingService {
 
+    private DiscountService discountService;
     private BookingDao bookingDao;
+    private AuditoriumService auditoriumService;
+    private EventService eventService;
+    private
 
-    BookingServiceImpl(BookingDao bookingDao) {
-        this.bookingDao = bookingDao;
+    BookingServiceImpl() {
     }
 
     public double getTicketPrice(Event event, Date date, Integer seat) {
@@ -26,7 +31,7 @@ public class BookingServiceImpl implements BookingService {
         if (event.getRaiting() == Event.Raiting.HIGH) {
             price = price * 1.2;
         }
-        Set<Integer> vipSeats = event.getAuditoriumAndDates().get(date).getVipSeats();
+        Set<Integer> vipSeats = auditoriumService.getAuditoriums().get(eventService.getAuditoriumName(event.getId(), date)).getVipSeats();
 
         if (vipSeats.contains(seat)) {
             calculatedPrice = calculatedPrice + price * 2;
@@ -49,8 +54,11 @@ public class BookingServiceImpl implements BookingService {
         if (isAuditoriumFull(ticket.getAuditorium(), ticket.getDate())) {
             return false;
         }
+        double discount = discountService.getDiscount(user, ticket.getEvent(), ticket.getDate());
+        ticket.setPrice(ticket.getPrice() - ticket.getPrice() * (discount / 100));
         user.getTickets().add(ticket);
         bookingDao.bookTicket(ticket);
+
         return true;
     }
 
@@ -63,7 +71,22 @@ public class BookingServiceImpl implements BookingService {
     }
 
     public List<Ticket> getTicketsForEvent(Event event, Date date) {
-        return bookingDao.getPurchasedTickets(event.getAuditoriumAndDates().get(date), date);
+        return bookingDao.getPurchasedTickets(auditoriumService.getAuditoriums().get(eventService.getAuditoriumName(event.getId(), date)), date);
     }
 
+    public void setDiscountService(DiscountService discountService) {
+        this.discountService = discountService;
+    }
+
+    public void setBookingDao(BookingDao bookingDao) {
+        this.bookingDao = bookingDao;
+    }
+
+    public void setAuditoriumService(AuditoriumService auditoriumService) {
+        this.auditoriumService = auditoriumService;
+    }
+
+    public void setEventService(EventService eventService) {
+        this.eventService = eventService;
+    }
 }

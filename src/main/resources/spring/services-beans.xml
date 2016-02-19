@@ -17,6 +17,6 @@
 
 	<import resource="discount-beans.xml" />
 
-	<bean name="bookingService" class="com.dbalota.show.services.impl.BookingServiceImpl" autowire="constructor">
+	<bean name="bookingService" class="com.dbalota.show.services.impl.BookingServiceImpl" autowire="byName">
 	</bean>
 </beans>

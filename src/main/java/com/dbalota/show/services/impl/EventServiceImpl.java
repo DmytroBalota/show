@@ -11,64 +11,64 @@ import com.dbalota.show.models.Event;
 import com.dbalota.show.services.EventService;
 
 public class EventServiceImpl implements EventService {
-	private EventDao eventDao;
+    private EventDao eventDao;
 
-	private EventServiceImpl(EventDao eventDao) {
-		this.eventDao = eventDao;
-	}
+    private EventServiceImpl(EventDao eventDao) {
+        this.eventDao = eventDao;
+    }
 
-	public void create(Event event) {
-		eventDao.add(event);
-	}
+    public boolean create(Event event) {
+        if (eventDao.eventNameExists(event.getName())) {
+            return false;
+        }
+        eventDao.add(event);
+        return true;
+    }
 
-	public void remove(Event event) {
-		eventDao.remove(event);
-	}
+    public void remove(Event event) {
+        eventDao.remove(event);
+    }
 
-	public Event getByName(String name) {
-		return eventDao.getByName(name);
-	}
+    public Event getByName(String name) {
+        return eventDao.getByName(name);
+    }
 
-	public Set<Event> getAll() {
-		return eventDao.getAll();
-	}
+    public List<Event> getAll() {
+        return eventDao.getAll();
+    }
 
-	public Set<Event> getForDateRange(Date from, Date to) {
-		return eventDao.getForDateRange(from, to);
-	}
+    public List<Event> getForDateRange(Date from, Date to) {
+        return eventDao.getForDateRange(from, to);
+    }
 
-	public Set<Event> getNextEvents(Date to) {
-		return eventDao.getNextEvents(to);
-	}
+    public List<Event> getNextEvents(Date to) {
+        return eventDao.getNextEvents(to);
+    }
 
-	public boolean assignAuditorium(Event event, Auditorium auditorium, Date date) {
-		// check if auditorium is free
-		for (Event e : eventDao.getAll()) {
+    public boolean assignAuditorium(Event event, Auditorium auditorium, Date date) {
+        // check if auditorium is free
+        for (Event e : eventDao.getAll()) {
 
-			for (Entry<Date, Auditorium> entry : e.getAuditoriumAndDates().entrySet()) {
-				if (entry.getValue().equals(auditorium))
-					// FIXME: 0.5% too complex condition
-					if ((date.getTime() >= entry.getKey().getTime()
-							&& date.getTime() <= (entry.getKey().getTime() + e.getDuration()))
-							|| (date.getTime() + event.getDuration()) >= entry.getKey().getTime() && (date.getTime()
-									+ event.getDuration()) <= (entry.getKey().getTime() + e.getDuration())) {
-						return false;
-					}
-			}
+            for (Date ed : eventDao.getEventDates(event.getId(), auditorium.getName())) {
+                // FIXME: 0.5% too complex condition
+                if ((date.getTime() >= ed.getTime()
+                        && date.getTime() <= (ed.getTime() + e.getDuration()))
+                        || (date.getTime() + event.getDuration()) >= ed.getTime() && (date.getTime()
+                        + event.getDuration()) <= (ed.getTime() + e.getDuration())) {
+                    return false;
+                }
+            }
 
-		}
-		// check if event does not happen more then one time per specific date
-		for (Date d : event.getAuditoriumAndDates().keySet()) {
-			if ((date.getTime() >= d.getTime() && date.getTime() <= (d.getTime() + event.getDuration()))
-					|| ((date.getTime() + event.getDuration()) >= d.getTime()
-							&& (date.getTime() + event.getDuration()) <= (d.getTime() + event.getDuration()))) {
-				return false;
-			}
-		}
+        }
 
-		event.getAuditoriumAndDates().put(date, auditorium);
+        eventDao.bookAuditorium(event.getId(), date, auditorium.getName());
 
-		return true;
-	}
+        return true;
+    }
+
+    @Override
+    public String getAuditoriumName(long eventId, Date date) {
+        return eventDao.getAuditoriumName(eventId, date);
+    }
 
 }

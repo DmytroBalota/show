@@ -6,17 +6,20 @@ import java.util.Date;
  * Created by Dmytro_Balota on 2/5/2016.
  */
 public class Ticket {
+    private int id;
     private double price;
-    private Auditorium auditorium;
+    private String auditoriumName;
     private Date date;
     private int seat;
+    private int eventId;
+    private Auditorium auditorium;
     private Event event;
 
     @Override
     public String toString() {
         return "Ticket{" +
                 "price=" + price +
-                ", auditorium=" + auditorium +
+                ", auditorium=" + auditoriumName +
                 ", date=" + date +
                 ", seat=" + seat +
                 '}';
@@ -38,20 +41,44 @@ public class Ticket {
         this.price = price;
     }
 
-    public Auditorium getAuditorium() {
-        return auditorium;
-    }
-
-    public void setAuditorium(Auditorium auditorium) {
-        this.auditorium = auditorium;
-    }
-
     public Date getDate() {
         return date;
     }
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public String getAuditoriumName() {
+        return auditoriumName;
+    }
+
+    public void setAuditoriumName(String auditoriumName) {
+        this.auditoriumName = auditoriumName;
+    }
+
+    public int getEventId() {
+        return eventId;
+    }
+
+    public void setEventId(int eventId) {
+        this.eventId = eventId;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Auditorium getAuditorium() {
+        return auditorium;
+    }
+
+    public void setAuditorium(Auditorium auditorium) {
+        this.auditorium = auditorium;
     }
 
     public Event getEvent() {

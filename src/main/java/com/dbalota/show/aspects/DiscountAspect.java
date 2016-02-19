@@ -21,12 +21,13 @@ public class DiscountAspect {
 
     private static Map<String, Integer> usersDiscountCount = new HashMap<>();
 
-    @Pointcut("execution(double com.dbalota.show.services.DiscountService.getDiscount(..)) )")
+    @Pointcut("execution(* *.getDiscount(..)) within(com.dbalota.show.services.impl.BookingServiceImpl) )")
     private void getDiscount() {
     }
 
     @Around("getDiscount()")
     public Object countSuccessDiscounts(ProceedingJoinPoint pjp) throws Throwable {
+        // FIXME: 1%: count how many times each discount was given total
         double discount = (Double) pjp.proceed();
 
         if (discount > 0) {

@@ -15,8 +15,12 @@ public class UserServiceImpl implements UserService {
         this.userDao = userDao;
     }
 
-    public void register(User user) {
+    public boolean register(User user) {
+        if (userDao.userExists(user.getFirstName(), user.getLastName())) {
+            return false;
+        }
         userDao.add(user);
+        return true;
     }
 
     public void remove(User user) {
