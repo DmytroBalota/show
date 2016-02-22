@@ -1,17 +1,10 @@
 package com.dbalota.show.dao;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
-
 import com.dbalota.show.dao.mapper.UserRowMapper;
-import com.dbalota.show.models.Ticket;
 import com.dbalota.show.models.User;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
+
+import java.util.List;
 
 public class UserDao {
 
@@ -20,6 +13,11 @@ public class UserDao {
     public Boolean userExists(String firstName, String lastName) {
         return jdbcTemplate.queryForObject("select count(*) from users where firstName = ? and lastName = ?",
                 new Object[]{firstName, lastName}, Boolean.class);
+    }
+
+    public User getUserByFirstAndLastName(String firstName, String lastName) {
+        return jdbcTemplate.queryForObject("select * from users where firstName = ? and lastName = ?",
+                new Object[]{firstName, lastName}, new UserRowMapper());
     }
 
     public void add(User user) {

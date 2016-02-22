@@ -15,6 +15,7 @@ public class TicketRowMapper implements RowMapper<Ticket> {
     public Ticket mapRow(ResultSet rs, int rowNum) throws SQLException {
         Ticket ticket = new Ticket();
         ticket.setEventId(rs.getInt("event_id"));
+        ticket.setUserId(rs.getInt("user_id"));
         ticket.setId(rs.getInt("id"));
         ticket.setPrice(rs.getDouble("price"));
         ticket.setDate(rs.getDate("date"));

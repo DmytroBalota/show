@@ -5,20 +5,15 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class User {
-    private long id;
+    private int id;
     private String firstName;
     private String lastName;
     private String email;
     private Date birthday;
 
-    private List<Ticket> tickets = new LinkedList<>();
-
-    public List<Ticket> getTickets() {
-        return tickets;
-    }
-
-    public void setTickets(List<Ticket> tickets) {
-        this.tickets = tickets;
+    public User(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
     public Date getBirthday() {
@@ -66,20 +61,6 @@ public class User {
         return true;
     }
 
-    public User(String firstName, String lastName, String email, Date birthday, long id) {
-        this(firstName, lastName, email, birthday);
-        this.id = id;
-    }
-
-    public User(String firstName, String lastName, String email, Date birthday) {
-        super();
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.birthday = birthday;
-
-    }
-
     public String getFirstName() {
         return firstName;
     }
@@ -107,11 +88,11 @@ public class User {
                 '}';
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

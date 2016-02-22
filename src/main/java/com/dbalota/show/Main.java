@@ -9,12 +9,14 @@ import java.util.Set;
 
 import com.dbalota.show.aspects.CounterAspect;
 import com.dbalota.show.aspects.DiscountAspect;
+import com.dbalota.show.models.Auditorium;
 import com.dbalota.show.models.Ticket;
 import com.dbalota.show.models.User;
 import com.dbalota.show.services.AuditoriumService;
 import com.dbalota.show.services.BookingService;
 import com.dbalota.show.services.EventService;
 import com.dbalota.show.services.UserService;
+import com.sun.org.apache.xpath.internal.SourceTree;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -36,6 +38,7 @@ public class Main {
         AuditoriumService auditoriumService = app.getAuditoriumService();
         EventService eventService = app.getEventService();
         BookingService bookingService = app.getBookingService();
+        CounterAspect counterAspect = app.getCounterAspect();
 
         // EVENT OPERATIONS
         Event event = new Event("Saw");
@@ -51,25 +54,26 @@ public class Main {
 
         eventService.create(event);
         if (!eventService.create(event)) {
-            System.out.println("Event exists:" + event);
+            print("Event exists:" + event);
         }
 
         event = eventService.getByName("Saw");
-        System.out.println("\nEvent:" + event);
+        print("Event:" + event);
         eventService.remove(event);
         eventService.create(event);
 
         event = eventService.getAll().get(0);
-
-        if (eventService.assignAuditorium(event, auditoriumService.getAuditoriums().get("Red room"),
+        print("Auditoriums:" + auditoriumService.getAuditoriums());
+        Auditorium auditorium = auditoriumService.getAuditoriums().get("Red room");
+        if (eventService.assignAuditorium(event, auditorium,
                 date)) {
-            System.out.println("\n Auditorium is free");
+            print(" Auditorium is free");
         } else {
-            System.out.println("\n Auditorium is not free");
+            print(" Auditorium is not free");
         }
 
         try {
-            System.out.println("\nEvents between 2016-11-01T12:00 and 2016-11-06T12:00 " + eventService.getForDateRange(df.parse("2016-11-01T12:00"), df.parse("2016-11-06T12:00")));
+            print("Events between 2016-11-01T12:00 and 2016-11-06T12:00 " + eventService.getForDateRange(df.parse("2016-11-01T12:00"), df.parse("2016-11-06T12:00")));
         } catch (ParseException e) {
             LOG.error(String.format("Wrong dated format. Thr correct date format is %s", DATE_FORMAT));
         }
@@ -79,32 +83,30 @@ public class Main {
         //USER OPERATIONS
         User user = null;
         try {
-            user = new User("Dmytro", "Balota", "dmytro_balota@epam.com", df.parse("1985-11-05" + "T00:00"));
+            user = new User("Dmytro", "Balota");
+            user.setEmail("dmytro_balota@epam.com");
+            user.setBirthday(df.parse("1985-11-05" + "T00:00"));
         } catch (ParseException e) {
             LOG.error(String.format("Wrong dated format. Thr correct date format is %s", DATE_FORMAT));
         }
 
         if (!userService.register(user)) {
-            System.out.println("User already registered");
+            print("User already registered");
         }
         user = userService.getUserByEmail(user.getEmail());
-        System.out.println("\n User by mail =" + user);
-        System.out.println("\n Users by name =" + userService.getUsersByName(user.getFirstName()));
-        System.out.println("\n User by id =" + userService.getById(user.getId()));
+        print(" User by mail =" + user);
+        print(" Users by name =" + userService.getUsersByName(user.getFirstName()));
+        print(" User by id =" + userService.getById(user.getId()));
         userService.remove(user);
-        System.out.println("\n Get user by name after remove =" + userService.getUsersByName(user.getFirstName()));
+        print(" Get user by name after remove =" + userService.getUsersByName(user.getFirstName()));
         userService.register(user);
 
-        //booking service
+        //BOOKING SERVICE
         Set<Integer> seats = new HashSet<>();
         seats.add(1);
-        seats.add(50);
+        seats.add(auditoriumService.getVipSeats("Red room").iterator().next());
 
-        double price = bookingService.getTicketPrice(event, date, seats);
-        double discount = app.getDiscountService().getDiscount(user, event, date);
-        price = price - price * (discount / 100);
-
-        System.out.println("\nPRICE = " + price);
+        print("PRICE = " + bookingService.getTicketPrice(event, date, seats));
 
         for (Integer seat : seats) {
             Ticket ticket = new Ticket();
@@ -112,15 +114,26 @@ public class Main {
             ticket.setAuditorium(auditoriumService.getAuditoriums().get("Red room"));
             ticket.setDate(date);
             ticket.setSeat(seat);
+            ticket.setPrice(bookingService.getTicketPrice(event, date, seat));
             ticket.setAuditoriumName("Red room");
             ticket.setEventId(event.getId());
             bookingService.bookTicket(user, ticket);
         }
 
-        System.out.println("\nBooked tickets:" + bookingService.getTicketsForEvent(event, date));
+        print("Booked tickets:" + bookingService.getTicketsForEvent(event, date));
 
-        System.out.println("\nStatistic:" + CounterAspect.getCounters());
+        print("User's tickets:" + userService.getBookedTickets(user));
 
-        System.out.println("\nNumber of received discounts:" + DiscountAspect.getUsersDiscountCount());
+        print("Statistic: "
+                +"\n\t"+CounterAspect.BOOK_TICKET+":"+counterAspect.getCounterNumber(CounterAspect.BOOK_TICKET)
+                +"\n\t"+CounterAspect.GET_EVENT_BY_NAME+":"+counterAspect.getCounterNumber(CounterAspect.GET_EVENT_BY_NAME)
+                +"\n\t"+CounterAspect.GET_TICKET_PRICE+":"+counterAspect.getCounterNumber(CounterAspect.GET_TICKET_PRICE));
+
+        print("Number of received discounts:" + DiscountAspect.getUsersDiscountCount());
+    }
+
+    private static void print(String s) {
+        System.out.print("\n=========================================================================================\n");
+        System.out.print(s);
     }
 }

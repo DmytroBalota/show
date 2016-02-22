@@ -25,18 +25,6 @@ public class Event {
     private int duration;
     private Raiting raiting;
 
-    public Event(String name, double price, int duration, Raiting raiting, int id) {
-        this(name, price, duration, raiting);
-        this.id = id;
-    }
-
-    public Event(String name, double price, int duration, Raiting raiting) {
-        this.name = name;
-        this.price = price;
-        this.duration = duration;
-        this.raiting = raiting;
-    }
-
     public int getDuration() {
         return duration;
     }

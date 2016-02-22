@@ -31,7 +31,7 @@ public class LuckyWinnerAspect {
 
         Boolean success = (Boolean) pjp.proceed();
 
-        if (success && r.nextInt() % 2 == 0) {
+        if (success && r.nextInt() % 13 == 0) {
             Ticket ticket = (Ticket) pjp.getArgs()[1];
             ticket.setPrice(0);
         }

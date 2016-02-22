@@ -1,12 +1,13 @@
 package com.dbalota.show.aspects;
 
+import com.dbalota.show.dao.CounterAspectDao;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,15 +23,8 @@ public class CounterAspect {
     public static final String BOOK_TICKET = "bookTicket";
     public static final String GET_EVENT_BY_NAME = "getEventByName";
 
-    private static Map<String, Integer> counters = new HashMap<>();
-
-
-    static {
-        counters.put(GET_EVENT_BY_NAME, 0);
-        counters.put(GET_TICKET_PRICE, 0);
-        counters.put(BOOK_TICKET, 0);
-    }
-
+    @Autowired
+    private CounterAspectDao counterAspectDao;
 
     @Pointcut("execution(com.dbalota.show.models.Event com.dbalota.show.services.EventService.getByName(..))")
     private void getEventByName() {
@@ -46,21 +40,37 @@ public class CounterAspect {
 
     @Before("getEventByName()")
     public void countGetEventByName(JoinPoint joinPoint) {
-        counters.put(GET_EVENT_BY_NAME, counters.get(GET_EVENT_BY_NAME) + 1);
+        if(counterAspectDao.counterExists(GET_EVENT_BY_NAME)){
+            counterAspectDao.incrementCounter(GET_EVENT_BY_NAME);
+        }else{
+            counterAspectDao.addCounter(GET_EVENT_BY_NAME, 1);
+        }
     }
 
     @Before("bookTicket())")
     public void countBookTicket(JoinPoint joinPoint) {
-        counters.put(BOOK_TICKET, counters.get(BOOK_TICKET) + 1);
+        if(counterAspectDao.counterExists(BOOK_TICKET)){
+            counterAspectDao.incrementCounter(BOOK_TICKET);
+        }else{
+            counterAspectDao.addCounter(BOOK_TICKET, 1);
+        }
     }
 
     @Before("getTicketPrice())")
     public void countGetTicketPrice(JoinPoint joinPoint) {
-        counters.put(GET_TICKET_PRICE, counters.get(GET_TICKET_PRICE) + 1);
+        if(counterAspectDao.counterExists(GET_TICKET_PRICE)){
+            counterAspectDao.incrementCounter(GET_TICKET_PRICE);
+        }else{
+            counterAspectDao.addCounter(GET_TICKET_PRICE, 1);
+        }
     }
 
 
-    public static Map<String, Integer> getCounters() {
-        return new HashMap<>(counters);
+    public Integer getCounterNumber(String name) {
+        return counterAspectDao.getCounterNumber(name);
+    }
+
+    public void setCounterAspectDao(CounterAspectDao counterAspectDao) {
+        this.counterAspectDao = counterAspectDao;
     }
 }

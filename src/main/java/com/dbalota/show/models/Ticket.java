@@ -12,6 +12,7 @@ public class Ticket {
     private Date date;
     private int seat;
     private int eventId;
+    private int userId;
     private Auditorium auditorium;
     private Event event;
 
@@ -87,5 +88,13 @@ public class Ticket {
 
     public void setEvent(Event event) {
         this.event = event;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 }

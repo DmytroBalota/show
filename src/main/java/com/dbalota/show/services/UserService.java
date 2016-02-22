@@ -16,6 +16,5 @@ public interface UserService {
 
     List<User> getUsersByName(String name);
 
-    // FIXME: 0.5% never used
     List<Ticket> getBookedTickets(User user);
 }

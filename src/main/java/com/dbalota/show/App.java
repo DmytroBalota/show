@@ -1,5 +1,6 @@
 package com.dbalota.show;
 
+import com.dbalota.show.aspects.CounterAspect;
 import com.dbalota.show.services.*;
 
 /**
@@ -17,6 +18,8 @@ public class App {
 	private BookingService bookingService;
 
 	private DiscountService discountService;
+
+	private CounterAspect counterAspect;
 
 	
 	public AuditoriumService getAuditoriumService() {
@@ -57,5 +60,13 @@ public class App {
 
 	public void setDiscountService(DiscountService discountService) {
 		this.discountService = discountService;
+	}
+
+	public CounterAspect getCounterAspect() {
+		return counterAspect;
+	}
+
+	public void setCounterAspect(CounterAspect counterAspect) {
+		this.counterAspect = counterAspect;
 	}
 }

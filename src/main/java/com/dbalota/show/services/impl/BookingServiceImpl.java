@@ -56,7 +56,7 @@ public class BookingServiceImpl implements BookingService {
         }
         double discount = discountService.getDiscount(user, ticket.getEvent(), ticket.getDate());
         ticket.setPrice(ticket.getPrice() - ticket.getPrice() * (discount / 100));
-        user.getTickets().add(ticket);
+        ticket.setUserId(user.getId());
         bookingDao.bookTicket(ticket);
 
         return true;

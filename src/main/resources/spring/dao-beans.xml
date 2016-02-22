@@ -20,6 +20,9 @@
     <bean name="bookingDao" class="com.dbalota.show.dao.BookingDao">
         <property name="jdbcTemplate" ref="jdbcTemplate"/>
     </bean>
+    <bean name="counterAspectDao" class="com.dbalota.show.dao.CounterAspectDao">
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
+    </bean>
 
     <util:properties id="auditorium1"
                      location="classpath:auditorium1.properties"/>

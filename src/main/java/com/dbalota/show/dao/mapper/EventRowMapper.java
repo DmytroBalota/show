@@ -13,6 +13,11 @@ import java.sql.SQLException;
 public class EventRowMapper implements RowMapper<Event> {
     public Event mapRow(ResultSet rs,
                         int rowNum) throws SQLException {
-        return new Event(rs.getString("name"), rs.getDouble("price"), rs.getInt("duration"), Event.Raiting.valueOf(rs.getString("raiting")), rs.getInt("id"));
+        Event event = new Event(rs.getString("name"));
+        event.setPrice(rs.getDouble("price"));
+        event.setId(rs.getInt("id"));
+        event.setDuration(rs.getInt("duration"));
+        event.setRaiting(Event.Raiting.valueOf(rs.getString("raiting")));
+        return event;
     }
 }

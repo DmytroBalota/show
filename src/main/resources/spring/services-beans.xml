@@ -5,6 +5,7 @@
 
 	<bean name="userService" class="com.dbalota.show.services.impl.UserServiceImpl">
 		<constructor-arg ref="userDao"></constructor-arg>
+		<constructor-arg ref="bookingDao"></constructor-arg>
 	</bean>
 
 	<bean name="eventService" class="com.dbalota.show.services.impl.EventServiceImpl">

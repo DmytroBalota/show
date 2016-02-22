@@ -14,6 +14,5 @@ public interface AuditoriumService {
     // FIXME: 0.5% never used
     int getSeatsNumber(String auditoriumName);
 
-    // FIXME: 0.5% never used
     Set<Integer> getVipSeats(String auditoriumName);
 }

@@ -22,11 +22,24 @@ public class BookingDao {
     }
 
     public void bookTicket(Ticket ticket) {
-        jdbcTemplate.update("insert into tickets (event_id, date, auditoriumName, seat, price) values(?,?,?,?,?)", ticket.getEventId()
-                , ticket.getDate(), ticket.getAuditoriumName(), ticket.getSeat(), ticket.getPrice());
+        jdbcTemplate.update("insert into tickets (user_id, event_id, date, auditoriumName, seat, price) values(?,?,?,?,?,?)",
+                ticket.getUserId(), ticket.getEventId(), ticket.getDate(), ticket.getAuditoriumName(),
+                ticket.getSeat(), ticket.getPrice());
+    }
+
+    public Integer getUsersTicketAmount(int userId) {
+        return jdbcTemplate.queryForObject("select count(*) from tickets where user_id = ? ", new Object[]{userId},
+                Integer.class);
+    }
+
+    public List<Ticket> getUsersBookedTickets(int userId) {
+        return jdbcTemplate.query("select * from tickets where user_id = ? ", new Object[]{userId},
+                new TicketRowMapper());
     }
 
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
+
+
 }
