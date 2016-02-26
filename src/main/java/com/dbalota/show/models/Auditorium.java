@@ -8,6 +8,7 @@ import java.util.Set;
  * Created by Dmytro_Balota on 2/5/2016.
  */
 public class Auditorium {
+    private int id;
     private String name;
     private int seatsNumber;
     private Set<Integer> vipSeats;
@@ -19,6 +20,9 @@ public class Auditorium {
                 ", seatsNumber=" + seatsNumber +
                 ", vipSeats=" + vipSeats +
                 '}';
+    }
+
+    public Auditorium() {
     }
 
     public Auditorium(String name, int seatsNumber, Set<Integer> vipSeats) {
@@ -75,5 +79,13 @@ public class Auditorium {
 
     public void setVipSeats(Set<Integer> vipSeats) {
         this.vipSeats = vipSeats;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

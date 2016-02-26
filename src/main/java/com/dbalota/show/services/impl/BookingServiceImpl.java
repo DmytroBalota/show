@@ -20,9 +20,8 @@ public class BookingServiceImpl implements BookingService {
     private BookingDao bookingDao;
     private AuditoriumService auditoriumService;
     private EventService eventService;
-    private
 
-    BookingServiceImpl() {
+    private BookingServiceImpl() {
     }
 
     public double getTicketPrice(Event event, Date date, Integer seat) {
@@ -31,7 +30,7 @@ public class BookingServiceImpl implements BookingService {
         if (event.getRaiting() == Event.Raiting.HIGH) {
             price = price * 1.2;
         }
-        Set<Integer> vipSeats = auditoriumService.getAuditoriums().get(eventService.getAuditoriumName(event.getId(), date)).getVipSeats();
+        Set<Integer> vipSeats = auditoriumService.getAuditorium(eventService.getAuditoriumName(event.getId(), date)).getVipSeats();
 
         if (vipSeats.contains(seat)) {
             calculatedPrice = calculatedPrice + price * 2;
@@ -71,7 +70,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     public List<Ticket> getTicketsForEvent(Event event, Date date) {
-        return bookingDao.getPurchasedTickets(auditoriumService.getAuditoriums().get(eventService.getAuditoriumName(event.getId(), date)), date);
+        return bookingDao.getPurchasedTickets(auditoriumService.getAuditorium(eventService.getAuditoriumName(event.getId(), date)), date);
     }
 
     public void setDiscountService(DiscountService discountService) {

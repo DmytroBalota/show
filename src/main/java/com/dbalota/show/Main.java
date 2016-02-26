@@ -40,6 +40,17 @@ public class Main {
         BookingService bookingService = app.getBookingService();
         CounterAspect counterAspect = app.getCounterAspect();
 
+        //AUDITORIUM
+        Auditorium auditorium = new Auditorium();
+        auditorium.setName("Red room");
+        Set<Integer> seats = new HashSet<>();
+        seats.add(48);
+        seats.add(49);
+        seats.add(50);
+        auditorium.setVipSeats(seats);
+        auditorium.setSeatsNumber(50);
+        auditoriumService.addAuditorium(auditorium);
+
         // EVENT OPERATIONS
         Event event = new Event("Saw");
         event.setDuration(87);
@@ -64,7 +75,7 @@ public class Main {
 
         event = eventService.getAll().get(0);
         print("Auditoriums:" + auditoriumService.getAuditoriums());
-        Auditorium auditorium = auditoriumService.getAuditoriums().get("Red room");
+        auditorium = auditoriumService.getAuditorium("Red room");
         if (eventService.assignAuditorium(event, auditorium,
                 date)) {
             print(" Auditorium is free");
@@ -102,7 +113,7 @@ public class Main {
         userService.register(user);
 
         //BOOKING SERVICE
-        Set<Integer> seats = new HashSet<>();
+        seats = new HashSet<>();
         seats.add(1);
         seats.add(auditoriumService.getVipSeats("Red room").iterator().next());
 
@@ -111,7 +122,7 @@ public class Main {
         for (Integer seat : seats) {
             Ticket ticket = new Ticket();
             ticket.setEvent(event);
-            ticket.setAuditorium(auditoriumService.getAuditoriums().get("Red room"));
+            ticket.setAuditorium(auditoriumService.getAuditorium("Red room"));
             ticket.setDate(date);
             ticket.setSeat(seat);
             ticket.setPrice(bookingService.getTicketPrice(event, date, seat));
@@ -125,9 +136,9 @@ public class Main {
         print("User's tickets:" + userService.getBookedTickets(user));
 
         print("Statistic: "
-                +"\n\t"+CounterAspect.BOOK_TICKET+":"+counterAspect.getCounterNumber(CounterAspect.BOOK_TICKET)
-                +"\n\t"+CounterAspect.GET_EVENT_BY_NAME+":"+counterAspect.getCounterNumber(CounterAspect.GET_EVENT_BY_NAME)
-                +"\n\t"+CounterAspect.GET_TICKET_PRICE+":"+counterAspect.getCounterNumber(CounterAspect.GET_TICKET_PRICE));
+                + "\n\t" + CounterAspect.BOOK_TICKET + ":" + counterAspect.getCounterNumber(CounterAspect.BOOK_TICKET)
+                + "\n\t" + CounterAspect.GET_EVENT_BY_NAME + ":" + counterAspect.getCounterNumber(CounterAspect.GET_EVENT_BY_NAME)
+                + "\n\t" + CounterAspect.GET_TICKET_PRICE + ":" + counterAspect.getCounterNumber(CounterAspect.GET_TICKET_PRICE));
 
         print("Number of received discounts:" + DiscountAspect.getUsersDiscountCount());
     }

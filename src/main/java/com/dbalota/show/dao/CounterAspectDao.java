@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
  * Created by Dmytro_Balota on 22/02/2016.
  */
 public class CounterAspectDao {
+
     private JdbcTemplate jdbcTemplate;
 
     public Boolean counterExists(String name) {

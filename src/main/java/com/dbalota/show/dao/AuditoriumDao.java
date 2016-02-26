@@ -6,14 +6,35 @@ import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import com.dbalota.show.dao.mapper.AuditoriumRowMapper;
+import com.dbalota.show.dao.mapper.TicketRowMapper;
 import com.dbalota.show.models.Auditorium;
+import com.dbalota.show.models.Ticket;
 import com.google.gson.Gson;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 public class AuditoriumDao {
 
-    private static Map<String, Auditorium> auditoriums = new HashMap<String, Auditorium>();
+    private JdbcTemplate jdbcTemplate;
+
+    private static Map<String, Auditorium> auditoriumsProps = new HashMap<String, Auditorium>();
 
     private Gson gson = new Gson();
+
+    public List<Auditorium> getAuditoriums() {
+        return jdbcTemplate.query("select * from auditoriums",
+                new AuditoriumRowMapper());
+    }
+
+    public Auditorium getAuditoriumByName(String name) {
+        return jdbcTemplate.queryForObject("select * from auditoriums where name = ?", new Object[]{name},
+                new AuditoriumRowMapper());
+    }
+
+    public void addAuditorium(Auditorium auditorium) {
+        jdbcTemplate.update("insert into auditoriums (id, name, seatsNumber, vipSeats) values(?,?,?,?)",
+                auditorium.getId(), auditorium.getName(), auditorium.getSeatsNumber(), auditorium.getVipSeats().stream().map(String::valueOf).collect(Collectors.joining(",")));
+    }
 
     private AuditoriumDao(List<Properties> properties) {
 
@@ -23,21 +44,13 @@ public class AuditoriumDao {
                     Integer.parseInt(prop.getProperty("seatsNumber")),
                     Arrays.asList(prop.getProperty("vipSeats").split(",")).stream().map(Integer::valueOf).collect(Collectors.toSet())
             );
-            auditoriums.put(auditorium.getName(), auditorium);
+            auditoriumsProps.put(auditorium.getName(), auditorium);
         }
 
-        /*
-         * for (Entry<?, ?> prop : props.entrySet()) { String name = (String)
-		 * prop.getKey(); String[] seats = ((String)
-		 * prop.getValue()).split("//");
-		 * 
-		 * auditoriums.put(name, new Auditorium(name,
-		 * Integer.parseInt(seats[0]), Integer.parseInt(seats[1]))); }
-		 */
     }
 
-    public Map<String, Auditorium> getAuditoriums() {
-        return auditoriums;
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
 
 }
