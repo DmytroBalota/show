@@ -16,7 +16,6 @@ import com.dbalota.show.services.AuditoriumService;
 import com.dbalota.show.services.BookingService;
 import com.dbalota.show.services.EventService;
 import com.dbalota.show.services.UserService;
-import com.sun.org.apache.xpath.internal.SourceTree;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -30,7 +29,7 @@ public class Main {
 
     public static void main(String[] args) {
         LOG.debug("Strarting....");
-        ApplicationContext context = new ClassPathXmlApplicationContext("spring/application-beans.xml");
+        ApplicationContext context = new ClassPathXmlApplicationContext("src/main/webapp/WEB-INF/spring/application-beans.xml");
         LOG.debug("Context created");
 
         App app = context.getBean("app", App.class);

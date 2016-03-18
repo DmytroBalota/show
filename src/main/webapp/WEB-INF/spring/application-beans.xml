@@ -14,8 +14,10 @@
 
     <context:annotation-config/>
     <context:component-scan
-            base-package="com.dbalota.show.aspects"/>
+            base-package="com.dbalota.show"/>
     <aop:aspectj-autoproxy/>
+
+    <!--bean name="mvcConfiguration" class="com.dbalota.show.config.MvcConfiguration" /-->
 
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" >
 
@@ -34,7 +36,7 @@
     <import resource="dao-beans.xml"/>
     <import resource="services-beans.xml"/>
 
-    <bean name="app" class="com.dbalota.show.App" autowire="byName">
-    </bean>
+    <!--bean name="app" class="com.dbalota.show.App" autowire="byName">
+    </bean-->
 
 </beans>
