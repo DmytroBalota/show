@@ -4,8 +4,8 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 	<bean name="userService" class="com.dbalota.show.services.impl.UserServiceImpl">
-		<constructor-arg ref="userDao"></constructor-arg>
-		<constructor-arg ref="bookingDao"></constructor-arg>
+		<constructor-arg ref="userDao"/>
+		<constructor-arg ref="bookingDao"/>
 	</bean>
 
 	<bean name="eventService" class="com.dbalota.show.services.impl.EventServiceImpl">

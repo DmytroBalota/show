@@ -1,0 +1,30 @@
+<h1>#springMessage("auditorium.add")</h1>
+<form method="post">
+    <table width="95%" bgcolor="f8f8ff" border="0" cellspacing="0" cellpadding="5">
+        <tr>
+            <td alignment="right" width="20%">Name:</td>
+            <td width="20%">
+                <input type="text" name="name" value="">
+            </td>
+        </tr>
+        <tr>
+            <td alignment="right" width="20%">Seats Number:</td>
+            <td width="20%">
+                <input type="text" name="seatsNumber" value="">
+            </td>
+        </tr>
+        <tr>
+            <td alignment="right" width="20%">VIP Seats:</td>
+            <td width="20%">
+                <input type="text" name="vipSeats" value="">
+            </td>
+        </tr>
+
+    </table>
+    <br>
+    <input type="submit" alignment="center" value="Add">
+</form>
+
+<a href="#springUrl("/")">Home</a>
+
+<h1>#springMessage("auditoriums")</h1>

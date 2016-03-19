@@ -1,6 +1,7 @@
 package com.dbalota.show.controller;
 
 import java.io.IOException;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -13,6 +14,6 @@ public class HomeController {
 
     @RequestMapping(value = "/")
     public ModelAndView test(HttpServletResponse response) throws IOException {
-        return new ModelAndView("home");
+        return new ModelAndView("home","now",new Date());
     }
 }

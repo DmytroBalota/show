@@ -29,7 +29,7 @@ public class Main {
 
     public static void main(String[] args) {
         LOG.debug("Strarting....");
-        ApplicationContext context = new ClassPathXmlApplicationContext("src/main/webapp/WEB-INF/spring/application-beans.xml");
+        ApplicationContext context = new ClassPathXmlApplicationContext("WEB-INF/spring/application-beans.xml");
         LOG.debug("Context created");
 
         App app = context.getBean("app", App.class);

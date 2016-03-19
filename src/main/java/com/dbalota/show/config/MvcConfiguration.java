@@ -9,12 +9,12 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
-@Configuration
+//@Configuration
 //@ComponentScan(basePackages="com.dbalota")
-@EnableWebMvc
+//@EnableWebMvc
 public class MvcConfiguration extends WebMvcConfigurerAdapter{
 
-	@Bean
+	//@Bean
 	public ViewResolver getViewResolver(){
 		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
 		resolver.setPrefix("/WEB-INF/views/");

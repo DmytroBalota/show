@@ -25,7 +25,7 @@
     </bean>
 
     <util:properties id="auditorium1"
-                     location="classpath:auditorium1.properties"/>
+                     location="WEB-INF/properties/auditorium1.properties"/>
 
     <bean name="auditoriumDao" class="com.dbalota.show.dao.AuditoriumDao" autowire="byType">
         <constructor-arg>

@@ -1,0 +1,20 @@
+<html>
+<head>
+    <title>Show</title>
+</head>
+<body>
+<div style="margin: auto; width: 1000px;;">
+    <div>
+        #parse("fragments/header.vm")
+    </div>
+
+    <div>
+        $screen_content
+    </div>
+
+    <div>
+        #parse("fragments/footer.vm")
+    </div>
+</div>
+</body>
+</html>
