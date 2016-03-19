@@ -13,6 +13,8 @@ public interface AuditoriumService {
 
     void addAuditorium(Auditorium auditorium);
 
+    void delete(Auditorium auditorium);
+
     List<Auditorium> getAuditoriums();
 
     Auditorium getAuditorium(String name);

@@ -36,4 +36,9 @@ public class AuditoriumServiceImpl implements AuditoriumService {
     public void addAuditorium(Auditorium auditorium) {
         auditoriumDao.addAuditorium(auditorium);
     }
+
+    @Override
+    public void delete(Auditorium auditorium) {
+        auditoriumDao.deleteAuditorium(auditorium);
+    }
 }

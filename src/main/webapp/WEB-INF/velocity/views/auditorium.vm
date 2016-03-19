@@ -1,5 +1,5 @@
 <h1>#springMessage("auditorium.add")</h1>
-<form method="post">
+<form method="post" >
     <table width="95%" bgcolor="f8f8ff" border="0" cellspacing="0" cellpadding="5">
         <tr>
             <td alignment="right" width="20%">Name:</td>
@@ -25,6 +25,21 @@
     <input type="submit" alignment="center" value="Add">
 </form>
 
-<a href="#springUrl("/")">Home</a>
 
 <h1>#springMessage("auditoriums")</h1>
+
+#foreach ($a in ${auditoriumList})
+<table width="95%" bgcolor="f8f8ff" border="0" cellspacing="0" cellpadding="5">
+    <tr>
+        <td alignment="right" width="20%">${a.id}</td>
+        <td width="20%">
+            ${a.name}
+        </td>
+        <td width="20%">
+            <a href="auditorium/delete/${a.name}">Delete</a>
+        </td>
+    </tr>
+</table>
+#end
+
+

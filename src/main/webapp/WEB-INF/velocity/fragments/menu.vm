@@ -1,0 +1,7 @@
+
+<div style="background: #f0f0f0; height: 40px; padding: 5px;">
+
+    <a href="#springUrl("/")">Home</a>
+    <a href="#springUrl("/auditorium")">Auditorium</a>
+    <a href="#springUrl("/event")">Event</a>
+</div>

@@ -27,13 +27,18 @@ public class AuditoriumDao {
     }
 
     public Auditorium getAuditoriumByName(String name) {
-        return jdbcTemplate.queryForObject("select * from auditoriums where name = ?", new Object[]{name},
+        return jdbcTemplate.queryForObject("select * from auditoriums where name = ? limit 1", new Object[]{name},
                 new AuditoriumRowMapper());
     }
 
     public void addAuditorium(Auditorium auditorium) {
         jdbcTemplate.update("insert into auditoriums (id, name, seatsNumber, vipSeats) values(?,?,?,?)",
                 auditorium.getId(), auditorium.getName(), auditorium.getSeatsNumber(), auditorium.getVipSeats().stream().map(String::valueOf).collect(Collectors.joining(",")));
+    }
+
+    public void deleteAuditorium(Auditorium auditorium) {
+        jdbcTemplate.update("delete from auditoriums where name = ?",
+                auditorium.getName());
     }
 
     private AuditoriumDao(List<Properties> properties) {

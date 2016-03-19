@@ -4,7 +4,9 @@ import com.dbalota.show.models.Auditorium;
 import com.dbalota.show.services.AuditoriumService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -18,18 +20,27 @@ import java.util.stream.Collectors;
 public class AuditoriumController {
     @Autowired
     private AuditoriumService auditoriumService;
-    @RequestMapping(value = "/auditorium")
+
+    @RequestMapping(value = "/auditorium", method = RequestMethod.GET)
     public ModelAndView auditoriumPage() {
-        return new ModelAndView("auditorium");
+        return new ModelAndView("auditorium", "auditoriumList", auditoriumService.getAuditoriums());
     }
 
-    @RequestMapping(value = "/auditorium/add")
+    @RequestMapping(value = "/auditorium", method = RequestMethod.POST)
     public ModelAndView addAuditorium(@RequestParam String name, @RequestParam int seatsNumber, @RequestParam String vipSeats) {
         Auditorium a = new Auditorium();
         a.setName(name);
         a.setSeatsNumber(seatsNumber);
         String[] vipS = vipSeats.trim().split(",");
         a.setVipSeats(Arrays.asList(vipS).stream().map(Integer::valueOf).collect(Collectors.toSet()));
-        return new ModelAndView("auditorium");
+        auditoriumService.addAuditorium(a);
+        return new ModelAndView("auditorium", "auditoriumList", auditoriumService.getAuditoriums());
+    }
+
+    @RequestMapping(value = "auditorium/delete/{nameAuditoriumTodele}")
+    public ModelAndView removeAuditorium(@PathVariable String nameAuditoriumTodele) {
+        Auditorium a = auditoriumService.getAuditorium(nameAuditoriumTodele);
+        auditoriumService.delete(a);
+        return new ModelAndView("redirect:/auditorium");
     }
 }
