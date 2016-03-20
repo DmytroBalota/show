@@ -1,6 +1,5 @@
 package com.dbalota.show.controller;
 
-import com.dbalota.show.models.Auditorium;
 import com.dbalota.show.models.Event;
 import com.dbalota.show.services.AuditoriumService;
 import com.dbalota.show.services.EventService;
@@ -13,10 +12,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.stream.Collectors;
 
 /**
  * Created by Dima on 19.03.2016.
@@ -28,6 +26,12 @@ public class EventController {
     @Autowired
     private EventService eventService;
 
+    private static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm";
+    private static final String CLIENT_DATE_FORMAT = "yyyy-MM-dd HH:mm";
+    private static DateFormat df = new SimpleDateFormat(DATE_FORMAT);
+    private static DateFormat cdf = new SimpleDateFormat(CLIENT_DATE_FORMAT);
+
+
     @RequestMapping(value = "/event", method = RequestMethod.GET)
     public ModelAndView eventPage() {
         ModelAndView mv = new ModelAndView("event", "auditoriumList", auditoriumService.getAuditoriums());
@@ -36,24 +40,31 @@ public class EventController {
     }
 
     @RequestMapping(value = "/event", method = RequestMethod.POST)
-    public ModelAndView addAuditorium(@RequestParam String name,
-                                      @RequestParam int duration,
-                                      @RequestParam double price,
-                                      @RequestParam String raiting,
-                                      @RequestParam Date date,
-                                      @RequestParam String auditorium
+    public ModelAndView addEvent(@RequestParam String name,
+                                 @RequestParam int duration,
+                                 @RequestParam double price,
+                                 @RequestParam String rating
     ) {
         Event e = new Event(name);
         e.setDuration(duration);
         e.setPrice(price);
-        e.setRaiting(Event.Raiting.valueOf(raiting));
-
+        e.setRating(Event.Rating.valueOf(rating));
         eventService.create(e);
-        e = eventService.getByName(name);
-        eventService.assignAuditorium(e, auditoriumService.getAuditorium(auditorium), date);
+
         ModelAndView mv = new ModelAndView("event", "auditoriumList", auditoriumService.getAuditoriums());
         mv.addObject("eventList", eventService.getAll());
         return mv;
+    }
+
+    @RequestMapping(value = "/event/assignAuditorium", method = RequestMethod.POST)
+    public ModelAndView assignAuditorium(@RequestParam String event,
+                                         @RequestParam String auditorium,
+                                         @RequestParam Date date
+
+    ) {
+        eventService.assignAuditorium(eventService.getByName(event),
+                auditoriumService.getAuditorium(auditorium), date);
+        return new ModelAndView("redirect:/event");
     }
 
     @RequestMapping(value = "/event/delete/{nameEventTodele}")
@@ -62,9 +73,19 @@ public class EventController {
         return new ModelAndView("redirect:/event");
     }
 
+    @RequestMapping(value = "event/delete/assignAuditorium/{eventId}/{date}")
+    public ModelAndView removeAuditorium(@PathVariable long eventId, @PathVariable String date) {
+        try {
+            eventService.deleteAssignment(eventId, cdf.parse(date));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return new ModelAndView("redirect:/event");
+    }
+
+
     @InitBinder
     public void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) {
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         df.setLenient(false);
         CustomDateEditor editor = new CustomDateEditor(df, true); // second argument 'allowEmpty' is set to true to allow  null/empty values.
         binder.registerCustomEditor(Date.class, editor);

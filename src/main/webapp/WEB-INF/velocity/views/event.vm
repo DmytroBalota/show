@@ -8,21 +8,9 @@
             </td>
         </tr>
         <tr>
-            <td alignment="right" width="20%">Duration:</td>
+            <td alignment="right" width="20%">Rating:</td>
             <td width="20%">
-                <input type="text" name="duration" value="">
-            </td>
-        </tr>
-        <tr>
-            <td alignment="right" width="20%">Price:</td>
-            <td width="20%">
-                <input type="text" name="price" value="">
-            </td>
-        </tr>
-        <tr>
-            <td alignment="right" width="20%">Raiting:</td>
-            <td width="20%">
-                <select name="raiting">
+                <select name="rating" value="">
                     <option value="HIGH">HIGH</option>
                     <option value="MID">MID</option>
                     <option value="LOW">LOW</option>
@@ -30,19 +18,15 @@
             </td>
         </tr>
         <tr>
-            <td alignment="right" width="20%">Date:</td>
+            <td alignment="right" width="20%">Duration (min):</td>
             <td width="20%">
-                <input type="date" name="date" value="">
+                <input type="number" name="duration" min="1" step="1" value="">
             </td>
         </tr>
         <tr>
-            <td alignment="right" width="20%">Auditorium:</td>
+            <td alignment="right" width="20%">Price:</td>
             <td width="20%">
-                <select name="auditorium">
-                    #foreach ($a in ${auditoriumList})
-                    <option value="${a.name}">${a.name}</option>
-                    #end
-                </select>
+                <input type="number" name="price" min="1" step="1" value="">
             </td>
         </tr>
     </table>
@@ -52,18 +36,83 @@
 
 <h1>#springMessage("events")</h1>
 
-#foreach ($e in ${eventList})
+
 <table width="95%" bgcolor="f8f8ff" border="0" cellspacing="0" cellpadding="5">
     <tr>
-        <td alignment="right" width="20%">${e.id}</td>
+        <th width="20%">Name</th>
+        <th width="20%">Raiting</th>
+        <th width="20%">Duration</th>
+        <th width="20%">Price</th>
+        <th width="20%">Delete</th>
+    </tr>
+    #foreach ($e in ${eventList})
+    <tr>
         <td width="20%">
             ${e.name}
+        </td>
+        <td width="20%">
+            ${e.rating}
+        </td>
+        <td width="20%">
+            ${e.duration}
+        </td>
+        <td width="20%">
+            ${e.price}
         </td>
         <td width="20%">
             <a href="event/delete/${e.name}">Delete</a>
         </td>
     </tr>
+
+    <tr>
+        <th colspan="2"></th>
+        <th>Date</th>
+        <th>Location</th>
+    </tr>
+    #foreach ($key in ${e.dateLocation.keySet()})
+    <tr>
+        <td colspan="2"></td>
+        <td>{$key}</td>
+        <td>${e.dateLocation.get($key)}</td>
+        <td >
+            <a href="event/delete/assignAuditorium/${e.id}/$key">Delete</a>
+        </td>
+    </tr>
+    #end
+    <tr>
+        <td colspan="2"></td>
+        <td colspan="3">
+            <form method="post" action="event/assignAuditorium">
+                <input type="hidden" name="event" value="${e.name}">
+                <table width="95%" bgcolor="f8f8ff" border="0" cellspacing="0" cellpadding="5">
+
+                    <tr>
+                        <td alignment="right" width="20%">Date:</td>
+                        <td width="20%">
+                            <input type="datetime-local" name="date" min="2016-01-01" value="">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td alignment="right" width="20%">Auditorium:</td>
+                        <td width="20%">
+                            <select name="auditorium" value="">
+                                #foreach ($a in ${auditoriumList})
+                                <option value="${a.name}">${a.name}</option>
+                                #end
+                            </select>
+                        </td>
+                        <td colspan="2">
+                            <input type="submit" alignment="center" value="Add">
+                        </td>
+                    </tr>
+
+                </table>
+
+            </form>
+        </td>
+    </tr>
+    #end
 </table>
-#end
+
 
 

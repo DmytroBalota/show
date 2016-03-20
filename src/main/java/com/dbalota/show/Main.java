@@ -54,7 +54,7 @@ public class Main {
         Event event = new Event("Saw");
         event.setDuration(87);
         event.setPrice(100);
-        event.setRaiting(Event.Raiting.HIGH);
+        event.setRating(Event.Rating.HIGH);
         Date date = null;
         try {
             date = df.parse("2016-11-05T12:00");

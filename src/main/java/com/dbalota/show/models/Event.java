@@ -1,7 +1,6 @@
 package com.dbalota.show.models;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -13,17 +12,18 @@ public class Event {
         this.name = name;
     }
 
-    public enum Raiting {
+    public enum Rating {
         HIGH, MID, LOW;
     }
 
     private int id;
-
     private String name;
     private double price;
     /* in minutes */
     private int duration;
-    private Raiting raiting;
+    private Rating rating;
+
+    private Map<String,String> dateLocation;
 
     public int getDuration() {
         return duration;
@@ -49,12 +49,20 @@ public class Event {
         this.price = price;
     }
 
-    public Raiting getRaiting() {
-        return raiting;
+    public Rating getRating() {
+        return rating;
     }
 
-    public void setRaiting(Raiting raiting) {
-        this.raiting = raiting;
+    public void setRating(Rating rating) {
+        this.rating = rating;
+    }
+
+    public Map<String, String> getDateLocation() {
+        return dateLocation;
+    }
+
+    public void setDateLocation(Map<String, String> dateLocation) {
+        this.dateLocation = dateLocation;
     }
 
     @Override
@@ -84,7 +92,7 @@ public class Event {
 
     @Override
     public String toString() {
-        return "Event [name=" + name + ", price=" + price + ", duration=" + duration + ", raiting=" + raiting
+        return "Event [name=" + name + ", price=" + price + ", duration=" + duration + ", rating=" + rating
                 + "]";
     }
 

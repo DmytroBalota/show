@@ -1,15 +1,17 @@
 package com.dbalota.show.dao;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Date;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 
 import com.dbalota.show.dao.mapper.EventRowMapper;
-import com.dbalota.show.dao.mapper.UserRowMapper;
-import com.dbalota.show.models.Auditorium;
 import com.dbalota.show.models.Event;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.ResultSetExtractor;
 
 public class EventDao {
 
@@ -21,8 +23,8 @@ public class EventDao {
     }
 
     public void add(Event event) {
-        jdbcTemplate.update("insert into events (name, price, duration, raiting) values(?,?,?,?)", event.getName()
-                , event.getPrice(), event.getDuration(), event.getRaiting().toString());
+        jdbcTemplate.update("insert into events (name, price, duration, rating) values(?,?,?,?)", event.getName()
+                , event.getPrice(), event.getDuration(), event.getRating().toString());
     }
 
     public void remove(Event event) {
@@ -40,8 +42,20 @@ public class EventDao {
     }
 
     public List<Event> getAll() {
-        return jdbcTemplate.query("select * from events",
+        List<Event> events = jdbcTemplate.query("select * from events",
                 new EventRowMapper());
+        for (Event e : events) {
+            e.setDateLocation(jdbcTemplate.query("select date, auditoriumName from event_date_location where event_id = ?",
+                    new Object[]{e.getId()},
+                    rs -> {
+                        Map<String, String> mapRet = new HashMap<>();
+                        while (rs.next()) {
+                            mapRet.put(rs.getString("date"), rs.getString("auditoriumName"));
+                        }
+                        return mapRet;
+                    }));
+        }
+        return events;
     }
 
     public Event getByName(String name) {
@@ -65,5 +79,9 @@ public class EventDao {
     public String getAuditoriumName(long eventId, Date date) {
         return jdbcTemplate.queryForObject("select auditoriumName from event_date_location where event_id = ? and date = ?",
                 new Object[]{eventId, date}, String.class);
+    }
+
+    public void deleteAssignment(long eventId, Date dateTime) {
+        jdbcTemplate.update("delete from event_date_location where event_id = ? and date = ?", new Object[]{eventId, dateTime});
     }
 }

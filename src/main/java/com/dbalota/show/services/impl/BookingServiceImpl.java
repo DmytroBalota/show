@@ -27,7 +27,7 @@ public class BookingServiceImpl implements BookingService {
     public double getTicketPrice(Event event, Date date, Integer seat) {
         double calculatedPrice = 0;
         double price = event.getPrice();
-        if (event.getRaiting() == Event.Raiting.HIGH) {
+        if (event.getRating() == Event.Rating.HIGH) {
             price = price * 1.2;
         }
         Set<Integer> vipSeats = auditoriumService.getAuditorium(eventService.getAuditoriumName(event.getId(), date)).getVipSeats();

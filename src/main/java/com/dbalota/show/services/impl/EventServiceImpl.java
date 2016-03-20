@@ -67,6 +67,11 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    public void deleteAssignment(long eventId, Date dateTime) {
+        eventDao.deleteAssignment(eventId, dateTime);
+    }
+
+    @Override
     public String getAuditoriumName(long eventId, Date date) {
         return eventDao.getAuditoriumName(eventId, date);
     }

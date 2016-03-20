@@ -26,5 +26,7 @@ public interface EventService {
 
     boolean assignAuditorium(Event event, Auditorium auditorium, Date date);
 
+    void deleteAssignment(long eventId, Date dateTime);
+
     String getAuditoriumName(long eventId, Date date);
 }

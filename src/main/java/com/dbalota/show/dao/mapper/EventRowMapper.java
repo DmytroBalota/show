@@ -1,7 +1,6 @@
 package com.dbalota.show.dao.mapper;
 
 import com.dbalota.show.models.Event;
-import com.dbalota.show.models.User;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
@@ -17,7 +16,7 @@ public class EventRowMapper implements RowMapper<Event> {
         event.setPrice(rs.getDouble("price"));
         event.setId(rs.getInt("id"));
         event.setDuration(rs.getInt("duration"));
-        event.setRaiting(Event.Raiting.valueOf(rs.getString("raiting")));
+        event.setRating(Event.Rating.valueOf(rs.getString("rating")));
         return event;
     }
 }
