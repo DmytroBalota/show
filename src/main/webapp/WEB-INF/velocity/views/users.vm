@@ -1,0 +1,67 @@
+<h1>#springMessage("user.add")</h1>
+<form method="post" >
+    <table width="95%" bgcolor="f8f8ff" border="0" cellspacing="0" cellpadding="5">
+        <tr>
+            <td alignment="right" width="20%">First Name:</td>
+            <td width="20%">
+                <input type="text" name="firstName" value="">
+            </td>
+        </tr>
+        <tr>
+            <td alignment="right" width="20%">Last Name:</td>
+            <td width="20%">
+                <input type="text" name="lastName" value="">
+            </td>
+        </tr>
+        <tr>
+            <td alignment="right" width="20%">Email:</td>
+            <td width="20%">
+                <input type="text" name="email" value="">
+            </td>
+        </tr>
+        <tr>
+            <td alignment="right" width="20%">Birthday:</td>
+            <td width="20%">
+                <input type="date" name="birthday" min="1900-01-01" value="">
+            </td>
+        </tr>
+
+    </table>
+    <br>
+    <input type="submit" alignment="center" value="Add">
+</form>
+
+
+<h1>#springMessage("users")</h1>
+
+
+<table width="95%" bgcolor="f8f8ff" border="0" cellspacing="0" cellpadding="5">
+    <tr>
+        <th width="20%">First Name</th>
+        <th width="20%">Last Name</th>
+        <th width="20%">Email</th>
+        <th width="20%">Birthday</th>
+    </tr>
+    #foreach ($u in ${usersList})
+    <tr>
+        <td width="20%">
+            ${u.firstName}
+        </td>
+        <td width="20%">
+            ${u.lastName}
+        </td>
+        <td width="20%">
+            ${u.email}
+        </td>
+        <td width="20%">
+            ${u.birthday}
+        </td>
+        <td width="20%">
+            <a href="users/delete/${u.id}">Delete</a>
+        </td>
+    </tr>
+    #end
+</table>
+
+
+

@@ -1,17 +1,10 @@
 package com.dbalota.show.dao;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import com.dbalota.show.dao.mapper.EventRowMapper;
 import com.dbalota.show.models.Event;
-import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.ResultSetExtractor;
 
 public class EventDao {
 
@@ -45,14 +38,14 @@ public class EventDao {
         List<Event> events = jdbcTemplate.query("select * from events",
                 new EventRowMapper());
         for (Event e : events) {
-            e.setDateLocation(jdbcTemplate.query("select date, auditoriumName from event_date_location where event_id = ?",
+            e.setDatesLocations(jdbcTemplate.query("select date, auditoriumName from event_date_location where event_id = ?",
                     new Object[]{e.getId()},
                     rs -> {
-                        Map<String, String> mapRet = new HashMap<>();
+                        List<Event.DateLocation> datesLocations = new ArrayList<>();
                         while (rs.next()) {
-                            mapRet.put(rs.getString("date"), rs.getString("auditoriumName"));
+                            datesLocations.add(new Event.DateLocation(rs.getString("date"), rs.getString("auditoriumName")));
                         }
-                        return mapRet;
+                        return datesLocations;
                     }));
         }
         return events;

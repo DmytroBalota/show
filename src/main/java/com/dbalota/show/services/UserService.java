@@ -17,4 +17,6 @@ public interface UserService {
     List<User> getUsersByName(String name);
 
     List<Ticket> getBookedTickets(User user);
+
+    List<User> getAll();
 }

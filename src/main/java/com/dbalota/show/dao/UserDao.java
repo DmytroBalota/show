@@ -44,4 +44,9 @@ public class UserDao {
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
+
+    public List<User> getAll() {
+        return jdbcTemplate.query("select * from users",
+                new UserRowMapper());
+    }
 }

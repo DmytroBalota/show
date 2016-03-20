@@ -48,4 +48,9 @@ public class UserServiceImpl implements UserService {
         return bookingDao.getUsersBookedTickets(user.getId());
     }
 
+    @Override
+    public List<User> getAll() {
+        return userDao.getAll();
+    }
+
 }

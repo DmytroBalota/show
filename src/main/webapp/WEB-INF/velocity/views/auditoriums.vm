@@ -14,7 +14,7 @@
             </td>
         </tr>
         <tr>
-            <td alignment="right" width="20%">VIP Seats:</td>
+            <td alignment="right" width="20%">VIP Seats(comma separated ex: 13,14,15):</td>
             <td width="20%">
                 <input type="text" name="vipSeats" value="">
             </td>
@@ -48,7 +48,7 @@
             ${a.vipSeats}
         </td>
         <td width="20%">
-            <a href="auditorium/delete/${a.name}">Delete</a>
+            <a href="auditoriums/delete/${a.name}">Delete</a>
         </td>
     </tr>
     #end

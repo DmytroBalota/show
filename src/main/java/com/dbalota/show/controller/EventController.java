@@ -32,14 +32,14 @@ public class EventController {
     private static DateFormat cdf = new SimpleDateFormat(CLIENT_DATE_FORMAT);
 
 
-    @RequestMapping(value = "/event", method = RequestMethod.GET)
+    @RequestMapping(value = "/events", method = RequestMethod.GET)
     public ModelAndView eventPage() {
-        ModelAndView mv = new ModelAndView("event", "auditoriumList", auditoriumService.getAuditoriums());
+        ModelAndView mv = new ModelAndView("events", "auditoriumList", auditoriumService.getAuditoriums());
         mv.addObject("eventList", eventService.getAll());
         return mv;
     }
 
-    @RequestMapping(value = "/event", method = RequestMethod.POST)
+    @RequestMapping(value = "/events", method = RequestMethod.POST)
     public ModelAndView addEvent(@RequestParam String name,
                                  @RequestParam int duration,
                                  @RequestParam double price,
@@ -51,12 +51,12 @@ public class EventController {
         e.setRating(Event.Rating.valueOf(rating));
         eventService.create(e);
 
-        ModelAndView mv = new ModelAndView("event", "auditoriumList", auditoriumService.getAuditoriums());
+        ModelAndView mv = new ModelAndView("events", "auditoriumList", auditoriumService.getAuditoriums());
         mv.addObject("eventList", eventService.getAll());
         return mv;
     }
 
-    @RequestMapping(value = "/event/assignAuditorium", method = RequestMethod.POST)
+    @RequestMapping(value = "/events/assignAuditorium", method = RequestMethod.POST)
     public ModelAndView assignAuditorium(@RequestParam String event,
                                          @RequestParam String auditorium,
                                          @RequestParam Date date
@@ -64,23 +64,23 @@ public class EventController {
     ) {
         eventService.assignAuditorium(eventService.getByName(event),
                 auditoriumService.getAuditorium(auditorium), date);
-        return new ModelAndView("redirect:/event");
+        return new ModelAndView("redirect:/events");
     }
 
-    @RequestMapping(value = "/event/delete/{nameEventTodele}")
+    @RequestMapping(value = "/events/delete/{nameEventTodele}")
     public ModelAndView removeAuditorium(@PathVariable String nameEventTodele) {
         eventService.remove(eventService.getByName(nameEventTodele));
-        return new ModelAndView("redirect:/event");
+        return new ModelAndView("redirect:/events");
     }
 
-    @RequestMapping(value = "event/delete/assignAuditorium/{eventId}/{date}")
+    @RequestMapping(value = "events/delete/assignAuditorium/{eventId}/{date}")
     public ModelAndView removeAuditorium(@PathVariable long eventId, @PathVariable String date) {
         try {
             eventService.deleteAssignment(eventId, cdf.parse(date));
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        return new ModelAndView("redirect:/event");
+        return new ModelAndView("redirect:/events");
     }
 
 

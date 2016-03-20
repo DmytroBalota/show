@@ -21,12 +21,12 @@ public class AuditoriumController {
     @Autowired
     private AuditoriumService auditoriumService;
 
-    @RequestMapping(value = "/auditorium", method = RequestMethod.GET)
+    @RequestMapping(value = "/auditoriums", method = RequestMethod.GET)
     public ModelAndView auditoriumPage() {
-        return new ModelAndView("auditorium", "auditoriumList", auditoriumService.getAuditoriums());
+        return new ModelAndView("auditoriums", "auditoriumList", auditoriumService.getAuditoriums());
     }
 
-    @RequestMapping(value = "/auditorium", method = RequestMethod.POST)
+    @RequestMapping(value = "/auditoriums", method = RequestMethod.POST)
     public ModelAndView addAuditorium(@RequestParam String name, @RequestParam int seatsNumber, @RequestParam String vipSeats) {
         Auditorium a = new Auditorium();
         a.setName(name);
@@ -34,13 +34,13 @@ public class AuditoriumController {
         String[] vipS = vipSeats.trim().split(",");
         a.setVipSeats(Arrays.asList(vipS).stream().map(Integer::valueOf).collect(Collectors.toSet()));
         auditoriumService.addAuditorium(a);
-        return new ModelAndView("auditorium", "auditoriumList", auditoriumService.getAuditoriums());
+        return new ModelAndView("auditoriums", "auditoriumList", auditoriumService.getAuditoriums());
     }
 
-    @RequestMapping(value = "auditorium/delete/{nameAuditoriumTodele}")
+    @RequestMapping(value = "auditoriums/delete/{nameAuditoriumTodele}")
     public ModelAndView removeAuditorium(@PathVariable String nameAuditoriumTodele) {
         Auditorium a = auditoriumService.getAuditorium(nameAuditoriumTodele);
         auditoriumService.delete(a);
-        return new ModelAndView("redirect:/auditorium");
+        return new ModelAndView("redirect:/auditoriums");
     }
 }

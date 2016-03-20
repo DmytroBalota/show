@@ -60,38 +60,33 @@
             ${e.price}
         </td>
         <td width="20%">
-            <a href="event/delete/${e.name}">Delete</a>
+            <a href="events/delete/${e.name}">Delete</a>
         </td>
     </tr>
 
     <tr>
         <th colspan="2"></th>
-        <th>Date</th>
         <th>Location</th>
+        <th>Date</th>
+
     </tr>
-    #foreach ($key in ${e.dateLocation.keySet()})
+    #foreach ($dl in ${e.datesLocations})
     <tr>
         <td colspan="2"></td>
-        <td>{$key}</td>
-        <td>${e.dateLocation.get($key)}</td>
-        <td >
-            <a href="event/delete/assignAuditorium/${e.id}/$key">Delete</a>
+        <td>${dl.location}</td>
+        <td>${dl.date}</td>
+        <td>
+            <a href="events/delete/assignAuditorium/${e.id}/$dl.date">Delete</a>
         </td>
     </tr>
     #end
     <tr>
         <td colspan="2"></td>
         <td colspan="3">
-            <form method="post" action="event/assignAuditorium">
+            <form method="post" action="events/assignAuditorium">
                 <input type="hidden" name="event" value="${e.name}">
                 <table width="95%" bgcolor="f8f8ff" border="0" cellspacing="0" cellpadding="5">
 
-                    <tr>
-                        <td alignment="right" width="20%">Date:</td>
-                        <td width="20%">
-                            <input type="datetime-local" name="date" min="2016-01-01" value="">
-                        </td>
-                    </tr>
                     <tr>
                         <td alignment="right" width="20%">Auditorium:</td>
                         <td width="20%">
@@ -100,6 +95,13 @@
                                 <option value="${a.name}">${a.name}</option>
                                 #end
                             </select>
+                        </td>
+                    </tr>
+                    <tr>
+
+                        <td alignment="right" width="20%">Date:</td>
+                        <td width="20%">
+                            <input type="datetime-local" name="date" min="2016-01-01" value="">
                         </td>
                         <td colspan="2">
                             <input type="submit" alignment="center" value="Add">

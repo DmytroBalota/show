@@ -1,7 +1,7 @@
 package com.dbalota.show.models;
 
 import java.util.Date;
-import java.util.Map;
+import java.util.List;
 
 /**
  * Created by Dmytro_Balota on 2/5/2016.
@@ -16,6 +16,32 @@ public class Event {
         HIGH, MID, LOW;
     }
 
+    public static  class DateLocation{
+        private String date;
+        private String location;
+
+        public DateLocation(String date, String location) {
+            this.date = date;
+            this.location = location;
+        }
+
+        public String getDate() {
+            return date;
+        }
+
+        public void setDate(String date) {
+            this.date = date;
+        }
+
+        public String getLocation() {
+            return location;
+        }
+
+        public void setLocation(String location) {
+            this.location = location;
+        }
+    }
+
     private int id;
     private String name;
     private double price;
@@ -23,7 +49,7 @@ public class Event {
     private int duration;
     private Rating rating;
 
-    private Map<String,String> dateLocation;
+    private List<DateLocation> datesLocations;
 
     public int getDuration() {
         return duration;
@@ -57,12 +83,12 @@ public class Event {
         this.rating = rating;
     }
 
-    public Map<String, String> getDateLocation() {
-        return dateLocation;
+    public List<DateLocation> getDatesLocations() {
+        return datesLocations;
     }
 
-    public void setDateLocation(Map<String, String> dateLocation) {
-        this.dateLocation = dateLocation;
+    public void setDatesLocations(List<DateLocation> datesLocations) {
+        this.datesLocations = datesLocations;
     }
 
     @Override
