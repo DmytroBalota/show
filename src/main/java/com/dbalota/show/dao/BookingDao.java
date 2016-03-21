@@ -17,7 +17,9 @@ public class BookingDao {
     private JdbcTemplate jdbcTemplate;
 
     public List<Ticket> getPurchasedTickets(Auditorium auditorium, Date date) {
-        return jdbcTemplate.query("select * from tickets",
+
+        return jdbcTemplate.query("select * from tickets where auditoriumName = ? and date = ?",
+                new Object[]{auditorium.getName(), date},
                 new TicketRowMapper());
     }
 

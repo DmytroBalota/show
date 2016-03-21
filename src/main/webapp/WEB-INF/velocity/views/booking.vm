@@ -1,0 +1,62 @@
+<h1>#springMessage("events")</h1>
+
+<form method="get" >
+    <table width="95%" bgcolor="f8f8ff" border="0" cellspacing="0" cellpadding="5">
+        <tr>
+            <td alignment="right" width="20%"><input type="submit" alignment="center" value="Get events to date:"></td>
+            <td width="20%">
+                <input type="datetime-local" name="date" min="1900-01-01" value="2016-01-01">
+            </td>
+        </tr>
+
+    </table>
+    <br>
+
+</form>
+
+<table width="95%" bgcolor="f8f8ff" border="0" cellspacing="0" cellpadding="5">
+    <tr>
+        <th width="20%">Name</th>
+        <th width="20%">Raiting</th>
+        <th width="20%">Duration</th>
+        <th width="20%">Price</th>
+        <th width="20%">Choose Date</th>
+    </tr>
+    #foreach ($e in ${eventList})
+    <tr>
+        <td width="20%">
+            ${e.name}
+        </td>
+        <td width="20%">
+            ${e.rating}
+        </td>
+        <td width="20%">
+            ${e.duration}
+        </td>
+        <td width="20%">
+            ${e.price}
+        </td>
+        <td width="20%">
+            <a href="booking/event/${e.name}">Choose Date</a>
+        </td>
+    </tr>
+
+    <tr>
+        <th colspan="2"></th>
+        <th>Location</th>
+        <th>Date</th>
+
+    </tr>
+    #foreach ($dl in ${e.datesLocations})
+    <tr>
+        <td colspan="2"></td>
+        <td>${dl.location}</td>
+        <td>${dl.date}</td>
+    </tr>
+    #end
+
+    #end
+</table>
+
+
+

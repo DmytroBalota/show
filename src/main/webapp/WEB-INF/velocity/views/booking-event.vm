@@ -1,0 +1,46 @@
+<h1>#springMessage("events")</h1>
+
+<table width="95%" bgcolor="f8f8ff" border="0" cellspacing="0" cellpadding="5">
+    <tr>
+        <th width="20%">Name</th>
+        <th width="20%">Raiting</th>
+        <th width="20%">Duration</th>
+        <th width="20%">Price</th>
+    </tr>
+    <tr>
+        <td width="20%">
+            ${event.name}
+        </td>
+        <td width="20%">
+            ${event.rating}
+        </td>
+        <td width="20%">
+            ${event.duration}
+        </td>
+        <td width="20%">
+            ${event.price}
+        </td>
+    </tr>
+
+    <tr>
+        <th colspan="2"></th>
+        <th>Location</th>
+        <th>Date</th>
+
+    </tr>
+    #foreach ($dl in ${event.datesLocations})
+    <tr>
+        <td colspan="2"></td>
+        <td>${dl.location}</td>
+        <td>${dl.date}</td>
+        <td width="20%">
+            <a href="datelocation/${event.name}/${dl.location}/${dl.date}">Book Ticket</a>
+        </td>
+    </tr>
+    #end
+
+
+</table>
+
+
+

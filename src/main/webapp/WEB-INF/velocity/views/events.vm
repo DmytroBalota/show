@@ -36,7 +36,6 @@
 
 <h1>#springMessage("events")</h1>
 
-
 <table width="95%" bgcolor="f8f8ff" border="0" cellspacing="0" cellpadding="5">
     <tr>
         <th width="20%">Name</th>

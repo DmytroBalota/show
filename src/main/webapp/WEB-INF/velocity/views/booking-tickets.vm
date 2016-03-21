@@ -1,0 +1,74 @@
+<h1>Book Ticket</h1>
+<form method="post">
+    <table width="95%" bgcolor="f8f8ff" border="0" cellspacing="0" cellpadding="5">
+
+        <tr>
+            <td alignment="right" width="20%">User:</td>
+            <td width="20%">
+                <select name="userId" value="">
+                    #foreach ($user in ${users})
+                    <option value="${user.id}">${user.firstName} ${user.lastName}</option>
+                    #end
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td alignment="right" width="20%">Seats Numbers(comma separated ex: 13,14,15):</td>
+            <td width="20%">
+                <input type="text" name="seatsNumbers" value="">
+            </td>
+        </tr>
+    </table>
+    <br>
+    <input type="submit" alignment="center" value="Book">
+</form>
+
+<h1>Auditorium</h1>
+
+<table width="95%" bgcolor="f8f8ff" border="0" cellspacing="0" cellpadding="5">
+    <tr>
+        <th width="20%">Name</th>
+        <th width="20%">Seats Number</th>
+        <th width="20%">Vip Seats</th>
+    </tr>
+    <tr>
+        <td width="20%">
+            ${auditorium.name}
+        </td>
+        <td width="20%">
+            ${auditorium.seatsNumber}
+        </td>
+        <td width="20%">
+            ${auditorium.vipSeats}
+        </td>
+    </tr>
+</table>
+
+<h1>Booked Tickets</h1>
+
+<table width="95%" bgcolor="f8f8ff" border="0" cellspacing="0" cellpadding="5">
+    <tr>
+        <th width="20%">Auditorium</th>
+        <th width="20%">Date</th>
+        <th width="20%">Price</th>
+        <th width="20%">Seat</th>
+    </tr>
+    #foreach ($ticket in ${bookedTickets})
+    <tr>
+        <td width="20%">
+            ${ticket.auditoriumName}
+        </td>
+        <td width="20%">
+            ${ticket.date}
+        </td>
+        <td width="20%">
+            ${ticket.price}
+        </td>
+        <td width="20%">
+            ${ticket.seat}
+        </td>
+    </tr>
+    #end
+</table>
+
+

@@ -25,12 +25,12 @@ public class EventDao {
     }
 
     public List<Event> getForDateRange(Date from, Date to) {
-        return jdbcTemplate.query("select * from events e left join event_date_location edl on id = event_id where date between ? and ? ",
+        return jdbcTemplate.query("select distinct id, name, price, duration, rating from events e left join event_date_location edl on id = event_id where date between ? and ? ",
                 new Object[]{from, to}, new EventRowMapper());
     }
 
     public List<Event> getNextEvents(Date to) {
-        return jdbcTemplate.query("select * from events e left join event_date_location edl on id = event_id where date between ? and ? ",
+        return jdbcTemplate.query("select distinct id, name, price, duration, rating from events e left join event_date_location edl on id = event_id where date between ? and ? ",
                 new Object[]{new Date(), to}, new EventRowMapper());
     }
 
@@ -38,22 +38,28 @@ public class EventDao {
         List<Event> events = jdbcTemplate.query("select * from events",
                 new EventRowMapper());
         for (Event e : events) {
-            e.setDatesLocations(jdbcTemplate.query("select date, auditoriumName from event_date_location where event_id = ?",
-                    new Object[]{e.getId()},
-                    rs -> {
-                        List<Event.DateLocation> datesLocations = new ArrayList<>();
-                        while (rs.next()) {
-                            datesLocations.add(new Event.DateLocation(rs.getString("date"), rs.getString("auditoriumName")));
-                        }
-                        return datesLocations;
-                    }));
+            setDatesLocations(e);
         }
         return events;
     }
 
+    private void setDatesLocations(final Event e) {
+        e.setDatesLocations(jdbcTemplate.query("select date, auditoriumName from event_date_location where event_id = ?",
+                new Object[]{e.getId()},
+                rs -> {
+                    List<Event.DateLocation> datesLocations = new ArrayList<>();
+                    while (rs.next()) {
+                        datesLocations.add(new Event.DateLocation(rs.getString("date"), rs.getString("auditoriumName")));
+                    }
+                    return datesLocations;
+                }));
+    }
+
     public Event getByName(String name) {
-        return jdbcTemplate.queryForObject("select * from events where name = ? ",
+        Event e = jdbcTemplate.queryForObject("select * from events where name = ? ",
                 new Object[]{name}, new EventRowMapper());
+        setDatesLocations(e);
+        return e;
     }
 
     public List<Date> getEventDates(long eventId, String auditoriumName) {
@@ -70,7 +76,7 @@ public class EventDao {
     }
 
     public String getAuditoriumName(long eventId, Date date) {
-        return jdbcTemplate.queryForObject("select auditoriumName from event_date_location where event_id = ? and date = ?",
+        return jdbcTemplate.queryForObject("select distinct auditoriumName from event_date_location where event_id = ? and date = ?",
                 new Object[]{eventId, date}, String.class);
     }
 

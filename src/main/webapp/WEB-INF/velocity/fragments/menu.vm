@@ -4,4 +4,5 @@
     <a style="border:solid 1px; padding:10px;margin:5px;" href="#springUrl("/auditoriums")">Auditoriums</a>
     <a style="border:solid 1px; padding:10px;margin:5px;" href="#springUrl("/events")">Events</a>
     <a style="border:solid 1px; padding:10px;margin:5px;" href="#springUrl("/users")">Users</a>
+    <a style="border:solid 1px; padding:10px;margin:5px;" href="#springUrl("/booking")">Booking</a>
 </div>

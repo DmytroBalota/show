@@ -20,7 +20,7 @@ public class DiscountBirthday implements DiscountStrategy {
         birthdayC.setTime(birthday);
         Calendar dateC = Calendar.getInstance();
         dateC.setTime(date);
-        if (birthdayC.get(Calendar.DATE) == dateC.get(Calendar.DATE)) {
+        if (birthdayC.get(Calendar.DATE) == dateC.get(Calendar.DATE) && birthdayC.get(Calendar.MONTH) == dateC.get(Calendar.MONTH)) {
             return 5;
         }
 
