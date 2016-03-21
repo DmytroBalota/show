@@ -69,6 +69,16 @@
     <import resource="dao-beans.xml"/>
     <import resource="services-beans.xml"/>
 
+    <bean id="simpleMappingExceptionResolver"
+          class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <property name="exceptionMappings">
+            <map>
+                <entry key="DatabaseException" value="error"/>
+            </map>
+        </property>
+        <property name="defaultErrorView" value="error"/>
+        <property name="exceptionAttribute" value="exception"/>
+    </bean>
     <!--bean name="app" class="com.dbalota.show.App" autowire="byName">
     </bean-->
 
