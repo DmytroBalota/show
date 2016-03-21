@@ -30,7 +30,7 @@ public class UserController {
     private static DateFormat cdf = new SimpleDateFormat(CLIENT_DATE_FORMAT);
 
     @RequestMapping(value = "/users", method = RequestMethod.GET)
-    public ModelAndView auditoriumPage() {
+    public ModelAndView userPage() {
         return new ModelAndView("users", "usersList", userService.getAll());
     }
 
@@ -48,7 +48,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "users/delete/{userId}")
-    public ModelAndView removeAuditorium(@PathVariable long userId) {
+    public ModelAndView removeUser(@PathVariable long userId) {
         userService.remove(userService.getById(userId));
         return new ModelAndView("redirect:/users");
     }
