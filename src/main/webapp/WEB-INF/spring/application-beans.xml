@@ -12,6 +12,7 @@
 	   http://www.springframework.org/schema/context
 	   http://www.springframework.org/schema/context/spring-context.xsd">
 
+    <!-- Spring Configurations -->
     <context:annotation-config/>
     <context:component-scan
             base-package="com.dbalota.show"/>
@@ -25,11 +26,15 @@
             <value>messages</value>
         </property>
     </bean>
-    <bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
-        <property name="defaultLocale" value="en_US" />
-    </bean>
 
-    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" >
+    <!-- Beans -->
+
+    <import resource="dao-beans.xml"/>
+    <import resource="services-beans.xml"/>
+
+    <!-- DB Configurations -->
+
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 
         <property name="driverClassName" value="${jdbc.driverClassName}"/>
         <property name="url" value="${jdbc.url}"/>
@@ -39,6 +44,16 @@
 
     <context:property-placeholder location="WEB-INF/properties/jdbc.properties"/>
 
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <constructor-arg ref="dataSource"/>
+    </bean>
+
+    <!-- Resolvers -->
+
+    <bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+        <property name="defaultLocale" value="en_US"/>
+    </bean>
+
     <bean id="velocityConfig"
           class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
         <property name="resourceLoaderPath">
@@ -46,14 +61,15 @@
         </property>
     </bean>
 
-
     <bean id="viewResolver"
           class="org.springframework.web.servlet.view.velocity.VelocityLayoutViewResolver">
-        <property name="cache" value="true" />
-        <property name="prefix" value="/views/" />
-        <property name="layoutUrl" value="layouts/layout.vm" />
-        <property name="suffix" value=".vm" />
-        <property name="exposeSpringMacroHelpers"><value>true</value></property>
+        <property name="cache" value="true"/>
+        <property name="prefix" value="/views/"/>
+        <property name="layoutUrl" value="layouts/layout.vm"/>
+        <property name="suffix" value=".vm"/>
+        <property name="exposeSpringMacroHelpers">
+            <value>true</value>
+        </property>
     </bean>
 
     <bean id="viewResolver2"
@@ -61,13 +77,13 @@
         <property name="basename" value="views"/>
     </bean>
 
-
-    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
-        <constructor-arg ref="dataSource"/>
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- Maximum file size in bytes -->
+        <property name="maxUploadSize" value="100000"/>
+        <!-- Maximum file size to keep in memory -->
+        <property name="maxInMemorySize" value="50000"/>
     </bean>
-
-    <import resource="dao-beans.xml"/>
-    <import resource="services-beans.xml"/>
 
     <bean id="simpleMappingExceptionResolver"
           class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">

@@ -1,0 +1,32 @@
+<h1>Uploads</h1>
+<h3>Users</h3>
+<form action="uploads/users" enctype="multipart/form-data" method="post">
+    <table width="95%" bgcolor="f8f8ff" border="0" cellspacing="0" cellpadding="5">
+        <tr>
+            <td alignment="right" width="20%">Choose dump file with users to upload in json format:</td>
+            <td width="20%">
+                <input type="file" name="usersDump" accept=".json">
+            </td>
+        </tr>
+    </table>
+    <br>
+    <input type="submit" alignment="center" value="Upload">
+</form>
+
+<h3>Events</h3>
+<form action="uploads/events" enctype="multipart/form-data" method="post">
+    <table width="95%" bgcolor="f8f8ff" border="0" cellspacing="0" cellpadding="5">
+        <tr>
+            <td alignment="right" width="20%">Choose dump file with events to upload in json format:</td>
+            <td width="20%">
+                <input type="file" name="eventsDump" accept=".json">
+            </td>
+        </tr>
+    </table>
+    <br>
+    <input type="submit" alignment="center" value="Upload">
+</form>
+
+
+
+

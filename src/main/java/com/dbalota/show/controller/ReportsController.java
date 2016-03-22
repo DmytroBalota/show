@@ -19,7 +19,7 @@ public class ReportsController {
         return new ModelAndView("reports", "users", userService.getAll());
     }
 
-    @RequestMapping(value = "/reports/usersBookedTickets"/*,  headers="accept=application/pdf"*/)
+    @RequestMapping(value = "/reports/usersBookedTickets",  produces="application/pdf")
     public ModelAndView usersTicketsPdf(@RequestParam long userId) {
         return new ModelAndView("usersTicketPdf", "usersBookedTickets", userService.getBookedTickets(userService.getById(userId)));
     }

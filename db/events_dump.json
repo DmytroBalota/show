@@ -1,0 +1,15 @@
+[
+	{
+		name:"Event 1",
+		price:"50",
+		duration:"180",
+		rating:"LOW"
+	},
+	{
+		name:"Event 2",
+		price:"100",
+		duration:"120",
+		rating:"MID"
+	}
+	
+]

@@ -23,8 +23,9 @@ CREATE TABLE IF NOT EXISTS `auditoriums` (
   `name` varchar(50) DEFAULT NULL,
   `seatsNumber` int(11) DEFAULT NULL,
   `vipSeats` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table show.auditoriums: ~3 rows (approximately)
 /*!40000 ALTER TABLE `auditoriums` DISABLE KEYS */;
@@ -43,10 +44,12 @@ CREATE TABLE IF NOT EXISTS `counters` (
   UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table show.counters: ~1 rows (approximately)
+-- Dumping data for table show.counters: ~3 rows (approximately)
 /*!40000 ALTER TABLE `counters` DISABLE KEYS */;
 INSERT INTO `counters` (`name`, `number`) VALUES
-	('getEventByName', 30);
+	('bookTicket', 4),
+	('getEventByName', 45),
+	('getTicketPrice', 4);
 /*!40000 ALTER TABLE `counters` ENABLE KEYS */;
 
 
@@ -58,6 +61,7 @@ CREATE TABLE IF NOT EXISTS `events` (
   `price` double DEFAULT NULL,
   `duration` int(11) DEFAULT NULL,
   `rating` varchar(50) DEFAULT NULL,
+  UNIQUE KEY `name` (`name`),
   KEY `id` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
@@ -101,10 +105,15 @@ CREATE TABLE IF NOT EXISTS `tickets` (
   KEY `FK_tickets_users` (`user_id`),
   CONSTRAINT `FK_tickets_events` FOREIGN KEY (`event_id`) REFERENCES `events` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_tickets_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
--- Dumping data for table show.tickets: ~0 rows (approximately)
+-- Dumping data for table show.tickets: ~4 rows (approximately)
 /*!40000 ALTER TABLE `tickets` DISABLE KEYS */;
+INSERT INTO `tickets` (`id`, `user_id`, `event_id`, `date`, `auditoriumName`, `seat`, `price`) VALUES
+	(1, 2, 5, '2016-03-31 12:00:00', 'Red Room', 1, 120),
+	(2, 2, 5, '2016-03-31 12:00:00', 'Red Room', 50, 240),
+	(3, 2, 5, '2016-04-01 13:00:00', 'White Room', 29, 240),
+	(4, 2, 5, '2016-04-01 13:00:00', 'White Room', 30, 240);
 /*!40000 ALTER TABLE `tickets` ENABLE KEYS */;
 
 

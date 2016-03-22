@@ -1,0 +1,15 @@
+[
+	{
+		firstName:"Dmytro",
+		lastName:"Balota",
+		email:"dmytro_balota@epam.com",
+		birthday:"1985-11-05"
+	},
+	{
+		firstName:"Oleh",
+		lastName:"Faizulin",
+		email:"oleh_faizulin@epam.com",
+		birthday:"1988-03-10"
+	}
+	
+]

@@ -11,8 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @ControllerAdvice
 public class ExceptionController {
-    @ExceptionHandler(Exception.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(value = Exception.class)
     public ModelAndView onServerException(Exception e) {
         return new ModelAndView("error", "errorMessage", e.getMessage());
     }
