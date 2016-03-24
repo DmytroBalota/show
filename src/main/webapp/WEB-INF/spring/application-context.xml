@@ -4,7 +4,6 @@
        xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:context="http://www.springframework.org/schema/context"
 
-
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 	   http://www.springframework.org/schema/beans/spring-beans.xsd
 	   http://www.springframework.org/schema/aop
@@ -18,6 +17,7 @@
             base-package="com.dbalota.show"/>
     <aop:aspectj-autoproxy/>
 
+
     <!--bean name="mvcConfiguration" class="com.dbalota.show.config.MvcConfiguration" /-->
 
     <bean id="messageSource"
@@ -30,7 +30,10 @@
     <!-- Beans -->
 
     <import resource="dao-beans.xml"/>
+
     <import resource="services-beans.xml"/>
+
+    <!--import resource="spring-security.xml"/-->
 
     <!-- DB Configurations -->
 
@@ -70,7 +73,14 @@
         <property name="exposeSpringMacroHelpers">
             <value>true</value>
         </property>
+        <property name="attributesMap">
+            <map>
+                <entry key="sec"><ref bean="veloSecUserDetails"/></entry>
+            </map>
+        </property>
     </bean>
+
+    <bean id ="veloSecUserDetails" class ="com.dbalota.show.security.VelocitySecurity"/>
 
     <bean id="viewResolver2"
           class="org.springframework.web.servlet.view.ResourceBundleViewResolver">
