@@ -4,7 +4,7 @@
     </div>
     <div style="float: right; padding: 10px;">
         Search <input name="search">
-        
+
         #if($sec.getPrincipal() != "Guest")
         <form name='logoutForm' method='POST' action="logout">
             <input type="hidden" name="${_csrf.parameterName}"

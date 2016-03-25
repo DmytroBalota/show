@@ -16,17 +16,30 @@
                 authentication-failure-url="/login?error"
                 username-parameter="username"
                 password-parameter="password" />
-        <logout logout-success-url="/" logout-url="/logout" />
+        <logout logout-success-url="/login?logout" logout-url="/logout" />
+
+        <!--remember-me data-source-ref="dataSource"/-->
         <!-- enable csrf protection -->
         <csrf/>
     </http>
 
+    <beans:bean id="daoAuthenticationProvider"
+                class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+        <beans:property name="userDetailsService" ref="userDetailsService"/>
+    </beans:bean>
+
+    <beans:bean id="authenticationManager"
+                class="org.springframework.security.authentication.ProviderManager">
+        <beans:constructor-arg>
+            <beans:list>
+                <beans:ref bean="daoAuthenticationProvider" />
+            </beans:list>
+        </beans:constructor-arg>
+    </beans:bean>
+
     <authentication-manager>
-        <authentication-provider>
-            <user-service>
-                <user name="jimi" password="jimispassword" authorities="ROLE_USER, ROLE_ADMIN"/>
-                <user name="bob" password="bobspassword" authorities="ROLE_USER"/>
-            </user-service>
+        <authentication-provider user-service-ref="userDetailsService">
+
         </authentication-provider>
     </authentication-manager>
 

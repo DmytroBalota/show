@@ -33,8 +33,6 @@
 
     <import resource="services-beans.xml"/>
 
-    <!--import resource="spring-security.xml"/-->
-
     <!-- DB Configurations -->
 
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">

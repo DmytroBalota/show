@@ -10,7 +10,10 @@
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <init-param>
             <param-name>contextConfigLocation</param-name>
-            <param-value>/WEB-INF/spring/application-context.xml</param-value>
+            <param-value>
+                        /WEB-INF/spring/application-context.xml
+                        /WEB-INF/spring/spring-security.xml
+            </param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
@@ -24,18 +27,18 @@
     </session-config>
 
 
-    <listener>
+    <!--listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener
         </listener-class>
-    </listener>
+    </listener-->
 
     <!-- Loads Spring Security config file -->
-    <context-param>
+    <!--context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>
             /WEB-INF/spring/spring-security.xml
         </param-value>
-    </context-param>
+    </context-param-->
 
     <!-- Spring Security -->
     <filter>
