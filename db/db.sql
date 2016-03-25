@@ -90,6 +90,21 @@ INSERT INTO `event_date_location` (`event_id`, `date`, `auditoriumName`) VALUES
 /*!40000 ALTER TABLE `event_date_location` ENABLE KEYS */;
 
 
+-- Dumping structure for table show.persistent_logins
+DROP TABLE IF EXISTS `persistent_logins`;
+CREATE TABLE IF NOT EXISTS `persistent_logins` (
+  `username` varchar(64) NOT NULL,
+  `series` varchar(64) NOT NULL,
+  `token` varchar(64) NOT NULL,
+  `last_used` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`series`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Dumping data for table show.persistent_logins: ~0 rows (approximately)
+/*!40000 ALTER TABLE `persistent_logins` DISABLE KEYS */;
+/*!40000 ALTER TABLE `persistent_logins` ENABLE KEYS */;
+
+
 -- Dumping structure for table show.tickets
 DROP TABLE IF EXISTS `tickets`;
 CREATE TABLE IF NOT EXISTS `tickets` (
@@ -125,14 +140,16 @@ CREATE TABLE IF NOT EXISTS `users` (
   `lastName` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
   `birthday` datetime NOT NULL,
+  `password` varchar(50) NOT NULL,
+  `roles` varchar(50) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `id` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table show.users: ~1 rows (approximately)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` (`id`, `firstName`, `lastName`, `email`, `birthday`) VALUES
-	(2, 'Dmytro', 'Balota', 'dmytro_balota@epam.com', '1985-01-01 00:00:00');
+INSERT INTO `users` (`id`, `firstName`, `lastName`, `email`, `birthday`, `password`, `roles`) VALUES
+	(2, 'Dmytro', 'Balota', 'dmytro_balota@epam.com', '1985-01-01 00:00:00', '123', 'ROLE_USER');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
