@@ -1,6 +1,8 @@
 <h1>Reports</h1>
 <h3>Users Booked Tickets</h3>
 <form action="reports/usersBookedTickets" accept='application/pdf' method="post">
+    <input type="hidden" name="${_csrf.parameterName}"
+           value="${_csrf.token}"/>
     <table width="95%" bgcolor="f8f8ff" border="0" cellspacing="0" cellpadding="5">
         <tr>
             <td alignment="right" width="20%">User:</td>

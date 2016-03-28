@@ -6,6 +6,7 @@ import com.dbalota.show.services.AuditoriumService;
 import com.dbalota.show.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +27,9 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    PasswordEncoder encoder;
+
     private static final String CLIENT_DATE_FORMAT = "yyyy-MM-dd";
     private static DateFormat cdf = new SimpleDateFormat(CLIENT_DATE_FORMAT);
 
@@ -35,14 +39,16 @@ public class UserController {
     }
 
     @RequestMapping(value = "/users", method = RequestMethod.POST)
-    public ModelAndView addAuditorium(@RequestParam String firstName,
+    public ModelAndView addUser(@RequestParam String firstName,
                                       @RequestParam String lastName,
+                                      @RequestParam String password,
                                       @RequestParam String email,
                                       @RequestParam Date birthday
     ) {
         User user = new User(firstName, lastName);
         user.setEmail(email);
         user.setBirthday(birthday);
+        user.setPassword(encoder.encode(password));
         userService.register(user);
         return new ModelAndView("users", "usersList", userService.getAll());
     }

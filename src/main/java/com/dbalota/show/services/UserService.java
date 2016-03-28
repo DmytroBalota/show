@@ -19,4 +19,6 @@ public interface UserService {
     List<Ticket> getBookedTickets(User user);
 
     List<User> getAll();
+
+    User getUserByNameSurname(String firstName, String lastName);
 }

@@ -24,7 +24,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throws UsernameNotFoundException {
 
         UserDetails userDetails = null;
-        User user = userService.getUsersByName(username).iterator().next();
+        String [] nameSurname = username.split("_");
+        User user = userService.getUserByNameSurname(nameSurname[0],nameSurname[1]);
         if (user == null)
             throw new UsernameNotFoundException("user not found");
         Collection<GrantedAuthority> authorities = new ArrayList<>();

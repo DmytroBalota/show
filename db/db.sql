@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `auditoriums` (
   `vipSeats` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table show.auditoriums: ~3 rows (approximately)
 /*!40000 ALTER TABLE `auditoriums` DISABLE KEYS */;
@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS `events` (
   `rating` varchar(50) DEFAULT NULL,
   UNIQUE KEY `name` (`name`),
   KEY `id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table show.events: ~1 rows (approximately)
 /*!40000 ALTER TABLE `events` DISABLE KEYS */;
@@ -140,16 +140,18 @@ CREATE TABLE IF NOT EXISTS `users` (
   `lastName` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
   `birthday` datetime NOT NULL,
-  `password` varchar(50) NOT NULL,
-  `roles` varchar(50) NOT NULL,
+  `password` varchar(150) NOT NULL,
+  `roles` varchar(50) NOT NULL DEFAULT 'ROLE_RESGISTERED_USER',
   PRIMARY KEY (`id`),
   KEY `id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table show.users: ~1 rows (approximately)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`id`, `firstName`, `lastName`, `email`, `birthday`, `password`, `roles`) VALUES
-	(2, 'Dmytro', 'Balota', 'dmytro_balota@epam.com', '1985-01-01 00:00:00', '123', 'ROLE_USER');
+	(2, 'Dmytro', 'Balota', 'dmytro_balota@epam.com', '1985-01-01 00:00:00', '$2a$10$EblZqNptyYvcLm/VwDCVAuBjzZOI7khzdyGPBr08PpIi0na624b8.', 'ROLE_RESGISTERED_USER'),
+	(4, 'Oleh', 'Faizulin', 'oleh_faizulin@epam.com', '1988-03-01 00:00:00', '$2a$11$9oEE/ANVnt5KOJKARpyPb.z/6XBzkLNBbPcEdOpsyfmS4t.hc.oyW', 'ROLE_RESGISTERED_USER'),
+	(6, 'Dmytro', 'ASD', '321', '2016-03-01 00:00:00', '$2a$11$t6IBOjfqsPPbW5Lf3zaiBeWBKchzyIS9nh/hnFkkA1TH8my3P1BHq', 'ROLE_RESGISTERED_USER');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;

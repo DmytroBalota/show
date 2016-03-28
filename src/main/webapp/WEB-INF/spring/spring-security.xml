@@ -9,14 +9,16 @@
         <intercept-url pattern="/login" access="permitAll"></intercept-url>
         <intercept-url pattern="/logout" access="permitAll"></intercept-url>
         <intercept-url pattern="/accessdenied" access="permitAll"></intercept-url>
-        <intercept-url pattern="/**" access="hasRole('ROLE_USER')"></intercept-url>
+        <intercept-url pattern="/**" access="hasRole('RESGISTERED_USER')"></intercept-url>
         <form-login
                 login-page="/login"
                 default-target-url="/"
                 authentication-failure-url="/login?error"
                 username-parameter="username"
-                password-parameter="password" />
-        <logout logout-success-url="/login?logout" logout-url="/logout" />
+                password-parameter="password"/>
+        <logout logout-success-url="/login?logout" logout-url="/logout"/>
+
+        <access-denied-handler error-page="/403"/>
 
         <!--remember-me data-source-ref="dataSource"/-->
         <!-- enable csrf protection -->
@@ -32,15 +34,20 @@
                 class="org.springframework.security.authentication.ProviderManager">
         <beans:constructor-arg>
             <beans:list>
-                <beans:ref bean="daoAuthenticationProvider" />
+                <beans:ref bean="daoAuthenticationProvider"/>
             </beans:list>
         </beans:constructor-arg>
     </beans:bean>
 
     <authentication-manager>
         <authentication-provider user-service-ref="userDetailsService">
-
+            <password-encoder ref="encoder" />
         </authentication-provider>
     </authentication-manager>
+
+    <beans:bean id="encoder"
+                class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+        <beans:constructor-arg name="strength" value="11" />
+    </beans:bean>
 
 </beans:beans>

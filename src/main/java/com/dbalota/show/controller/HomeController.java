@@ -1,6 +1,7 @@
 package com.dbalota.show.controller;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletResponse;
@@ -42,5 +43,23 @@ public class HomeController {
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public ModelAndView logout() {
         return new ModelAndView("login", "_csrf", null);
+    }
+
+    @RequestMapping(value = "/403", method = RequestMethod.GET)
+    public ModelAndView accesssDenied(Principal user) {
+
+        ModelAndView model = new ModelAndView();
+
+        if (user != null) {
+            model.addObject("msg", "Hi " + user.getName()
+                    + ", you do not have permission to access this page!");
+        } else {
+            model.addObject("msg",
+                    "You do not have permission to access this page!");
+        }
+
+        model.setViewName("403");
+        return model;
+
     }
 }

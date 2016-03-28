@@ -51,7 +51,7 @@
         <table>
             <tr>
                 <td>User:</td>
-                <td><input type='text' name='username' value=''></td>
+                <td><input type='text' name='username' value='' placeholder="FirstName_LastName"></td>
             </tr>
             <tr>
                 <td>Password:</td>

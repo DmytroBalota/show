@@ -9,6 +9,7 @@
         <form name='logoutForm' method='POST' action="logout">
             <input type="hidden" name="${_csrf.parameterName}"
                    value="${_csrf.token}"/>
+            $sec.getPrincipal() :
             <a href="#" onclick="document.logoutForm.submit()">Logout</a>
         </form>
         #end

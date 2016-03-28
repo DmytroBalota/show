@@ -28,7 +28,7 @@ public class VelocitySecurity {
     /**
      * Is the user granted all of the grantedAuthorities passed in
      *
-     * @param roles a string array of grantedAuth
+     * @param checkForAuths a string array of grantedAuth
      * @return true if user has all of the listed authorities/roles, otherwise false
      */
     public static boolean allGranted(String[] checkForAuths) {
@@ -44,7 +44,7 @@ public class VelocitySecurity {
     /**
      * Is the user granted any of the grantedAuthorities passed into
      *
-     * @param roles a string array of grantedAuth
+     * @param checkForAuths a string array of grantedAuth
      * @return true if user has any of the listed authorities/roles, otherwise false
      */
     public static boolean anyGranted(String[] checkForAuths) {

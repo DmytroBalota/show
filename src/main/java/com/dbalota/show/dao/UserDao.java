@@ -21,8 +21,8 @@ public class UserDao {
     }
 
     public void add(User user) {
-        jdbcTemplate.update("insert into users (firstName, lastName, email, birthday) values(?,?,?,?)", user.getFirstName()
-                , user.getLastName(), user.getEmail(), user.getBirthday());
+        jdbcTemplate.update("insert into users (firstName, lastName, email, birthday, password) values(?,?,?,?,?)", user.getFirstName()
+                , user.getLastName(), user.getEmail(), user.getBirthday(), user.getPassword());
     }
 
     public void remove(User user) {
@@ -48,5 +48,9 @@ public class UserDao {
     public List<User> getAll() {
         return jdbcTemplate.query("select * from users",
                 new UserRowMapper());
+    }
+
+    public User getUserByNameSurname(String firstName, String lastName) {
+        return jdbcTemplate.queryForObject("select * from users where firstName = ? and lastName = ?", new Object[]{firstName, lastName}, new UserRowMapper());
     }
 }
