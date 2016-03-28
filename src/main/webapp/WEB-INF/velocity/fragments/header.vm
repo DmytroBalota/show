@@ -5,14 +5,20 @@
     <div style="float: right; padding: 10px;">
         Search <input name="search">
 
-        #if($sec.getPrincipal() != "Guest")
+
+        #if($sec.getPrincipal() != "Guest" )
         <form name='logoutForm' method='POST' action="logout">
             <input type="hidden" name="${_csrf.parameterName}"
                    value="${_csrf.token}"/>
             $sec.getPrincipal() :
             <a href="#" onclick="document.logoutForm.submit()">Logout</a>
+
         </form>
         #end
+        #if($sec.rememberMeAuthenticated())
+            logined by "Remember Me Cookies"
+        #end
+
 
     </div>
 </div>

@@ -4,11 +4,27 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.springframework.security.authentication.RememberMeAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
 public class VelocitySecurity {
+
+    /**
+     * Check if user is login by remember me cookie, refer
+     * org.springframework.security.authentication.AuthenticationTrustResolverImpl
+     */
+    public static boolean rememberMeAuthenticated() {
+        Authentication authentication =
+                SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null) {
+            return false;
+        }
+
+        return RememberMeAuthenticationToken.class.isAssignableFrom(authentication.getClass());
+    }
 
     /**
      * Gets the user name of the user from the Authentication object

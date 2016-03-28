@@ -9,7 +9,8 @@
         <intercept-url pattern="/login" access="permitAll"></intercept-url>
         <intercept-url pattern="/logout" access="permitAll"></intercept-url>
         <intercept-url pattern="/accessdenied" access="permitAll"></intercept-url>
-        <intercept-url pattern="/**" access="hasRole('RESGISTERED_USER')"></intercept-url>
+        <intercept-url pattern="/booking*" access="denyAll or hasRole('BOOKING_MANAGER')"></intercept-url>
+        <intercept-url pattern="/*" access="hasRole('RESGISTERED_USER')"></intercept-url>
         <form-login
                 login-page="/login"
                 default-target-url="/"
@@ -23,7 +24,17 @@
         <!--remember-me data-source-ref="dataSource"/-->
         <!-- enable csrf protection -->
         <csrf/>
+
+        <remember-me
+                token-validity-seconds="1209600"
+                remember-me-parameter="remember-me"
+                data-source-ref="dataSource" />
     </http>
+
+    <beans:bean id="savedRequestAwareAuthenticationSuccessHandler"
+          class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">
+        <beans:property name="targetUrlParameter" value="targetUrl" />
+    </beans:bean>
 
     <beans:bean id="daoAuthenticationProvider"
                 class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">

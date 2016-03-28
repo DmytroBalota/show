@@ -1,6 +1,6 @@
 -- --------------------------------------------------------
 -- Host:                         127.0.0.1
--- Server version:               5.5.23 - MySQL Community Server (GPL)
+-- Server version:               5.7.11-log - MySQL Community Server (GPL)
 -- Server OS:                    Win64
 -- HeidiSQL Version:             9.3.0.4984
 -- --------------------------------------------------------
@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS `events` (
   KEY `id` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
--- Dumping data for table show.events: ~1 rows (approximately)
+-- Dumping data for table show.events: ~0 rows (approximately)
 /*!40000 ALTER TABLE `events` DISABLE KEYS */;
 INSERT INTO `events` (`id`, `name`, `price`, `duration`, `rating`) VALUES
 	(5, 'Saw', 100, 100, 'HIGH');
@@ -102,6 +102,8 @@ CREATE TABLE IF NOT EXISTS `persistent_logins` (
 
 -- Dumping data for table show.persistent_logins: ~0 rows (approximately)
 /*!40000 ALTER TABLE `persistent_logins` DISABLE KEYS */;
+INSERT INTO `persistent_logins` (`username`, `series`, `token`, `last_used`) VALUES
+	('Dmytro_Balota', 'xeL+oodYJQ27+P6iegfQlw==', 'ji5JwTJw42PydPU+xcF6gA==', '2016-03-28 23:56:58');
 /*!40000 ALTER TABLE `persistent_logins` ENABLE KEYS */;
 
 
@@ -146,11 +148,11 @@ CREATE TABLE IF NOT EXISTS `users` (
   KEY `id` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
--- Dumping data for table show.users: ~1 rows (approximately)
+-- Dumping data for table show.users: ~3 rows (approximately)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`id`, `firstName`, `lastName`, `email`, `birthday`, `password`, `roles`) VALUES
 	(2, 'Dmytro', 'Balota', 'dmytro_balota@epam.com', '1985-01-01 00:00:00', '$2a$10$EblZqNptyYvcLm/VwDCVAuBjzZOI7khzdyGPBr08PpIi0na624b8.', 'ROLE_RESGISTERED_USER'),
-	(4, 'Oleh', 'Faizulin', 'oleh_faizulin@epam.com', '1988-03-01 00:00:00', '$2a$11$9oEE/ANVnt5KOJKARpyPb.z/6XBzkLNBbPcEdOpsyfmS4t.hc.oyW', 'ROLE_RESGISTERED_USER'),
+	(4, 'Oleh', 'Faizulin', 'oleh_faizulin@epam.com', '1988-03-01 00:00:00', '$2a$10$EblZqNptyYvcLm/VwDCVAuBjzZOI7khzdyGPBr08PpIi0na624b8.', 'ROLE_RESGISTERED_USER,ROLE_BOOKING_MANAGER'),
 	(6, 'Dmytro', 'ASD', '321', '2016-03-01 00:00:00', '$2a$11$t6IBOjfqsPPbW5Lf3zaiBeWBKchzyIS9nh/hnFkkA1TH8my3P1BHq', 'ROLE_RESGISTERED_USER');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
