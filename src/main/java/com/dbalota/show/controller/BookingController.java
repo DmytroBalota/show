@@ -8,6 +8,7 @@ import com.dbalota.show.services.BookingService;
 import com.dbalota.show.services.EventService;
 import com.dbalota.show.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -63,13 +64,22 @@ public class BookingController {
     }
 
     @RequestMapping(value = "/booking/event/datelocation/{eventName}/{location}/{date}", method = RequestMethod.GET)
-    public ModelAndView bookingTicketPage(@PathVariable String eventName,
-                                          @PathVariable String location,
-                                          @PathVariable String date) throws ParseException {
-        List<Ticket> bookedTickets = bookingService.getTicketsForEvent(eventService.getByName(eventName), dtf.parse(date));
-        ModelAndView mv = new ModelAndView("booking-tickets", "bookedTickets", bookedTickets);
+    public ModelAndView bookingTicketPage(@PathVariable String location) throws ParseException {
+        ModelAndView mv = new ModelAndView("booking-tickets");
+
         mv.addObject("users", userService.getAll());
         mv.addObject("auditorium", auditoriumService.getAuditorium(location));
+        return mv;
+    }
+
+    @RequestMapping(value = "/booking/event/datelocation/{eventName}/{location}/{date}/bookedtickets", method = RequestMethod.GET)
+    private ModelAndView addToModdelBookedTickets(@PathVariable String eventName,
+                                                  @PathVariable String date) throws ParseException {
+
+        ModelAndView mv = new ModelAndView("booked-tickets");
+        List<Ticket> bookedTickets = bookingService.getTicketsForEvent(eventService.getByName(eventName), dtf.parse(date));
+        mv.addObject("bookedTickets", bookedTickets);
+
         return mv;
     }
 

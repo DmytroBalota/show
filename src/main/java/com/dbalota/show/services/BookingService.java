@@ -3,6 +3,7 @@ package com.dbalota.show.services;
 import com.dbalota.show.models.Event;
 import com.dbalota.show.models.Ticket;
 import com.dbalota.show.models.User;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.util.Date;
 import java.util.List;
@@ -19,6 +20,7 @@ public interface BookingService {
 
     boolean bookTicket(User user, Ticket ticket);
 
+    @PreAuthorize("hasAuthority('ROLE_BOOKING_MANAGER')")
     List<Ticket> getTicketsForEvent(Event event, Date date);
 
 }

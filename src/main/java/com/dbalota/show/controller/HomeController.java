@@ -42,7 +42,7 @@ public class HomeController {
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public ModelAndView logout() {
-        return new ModelAndView("login", "_csrf", null);
+        return new ModelAndView("login");
     }
 
     @RequestMapping(value = "/403", method = RequestMethod.GET)

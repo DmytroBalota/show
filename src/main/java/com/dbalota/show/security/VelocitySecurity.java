@@ -22,7 +22,6 @@ public class VelocitySecurity {
         if (authentication == null) {
             return false;
         }
-
         return RememberMeAuthenticationToken.class.isAssignableFrom(authentication.getClass());
     }
 

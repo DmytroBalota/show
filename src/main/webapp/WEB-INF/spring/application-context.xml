@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:security="http://www.springframework.org/schema/security"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:context="http://www.springframework.org/schema/context"
@@ -73,12 +74,17 @@
         </property>
         <property name="attributesMap">
             <map>
-                <entry key="sec"><ref bean="veloSecUserDetails"/></entry>
+                <entry key="sec">
+                    <ref bean="veloSecUserDetails"/>
+                </entry>
+                <entry key="vlnkt"> <ref bean="vLinkTool"/></entry>
             </map>
         </property>
     </bean>
 
-    <bean id ="veloSecUserDetails" class ="com.dbalota.show.security.VelocitySecurity"/>
+    <bean id="veloSecUserDetails" class="com.dbalota.show.security.VelocitySecurity"/>
+
+    <bean id="vLinkTool" class="org.apache.velocity.tools.generic.LinkTool"/>
 
     <bean id="viewResolver2"
           class="org.springframework.web.servlet.view.ResourceBundleViewResolver">
@@ -93,7 +99,7 @@
         <property name="maxInMemorySize" value="50000"/>
     </bean>
 
-    <bean id="simpleMappingExceptionResolver"
+    <!--bean id="simpleMappingExceptionResolver"
           class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
         <property name="exceptionMappings">
             <map>
@@ -102,7 +108,7 @@
         </property>
         <property name="defaultErrorView" value="error"/>
         <property name="exceptionAttribute" value="exception"/>
-    </bean>
+    </bean-->
     <!--bean name="app" class="com.dbalota.show.App" autowire="byName">
     </bean-->
 
