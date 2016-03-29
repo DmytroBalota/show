@@ -31,11 +31,15 @@ public class VelocitySecurity {
      * @return the user name as string
      */
     public static String getPrincipal() {
-        Object obj = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        try {
+            Object obj = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        if (obj instanceof UserDetails) {
-            return ((UserDetails) obj).getUsername();
-        } else {
+            if (obj instanceof UserDetails) {
+                return ((UserDetails) obj).getUsername();
+            } else {
+                return "Guest";
+            }
+        } catch (Exception w) {
             return "Guest";
         }
     }

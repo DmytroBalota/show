@@ -99,7 +99,7 @@
         <property name="maxInMemorySize" value="50000"/>
     </bean>
 
-    <!--bean id="simpleMappingExceptionResolver"
+    <bean id="simpleMappingExceptionResolver"
           class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
         <property name="exceptionMappings">
             <map>
@@ -108,7 +108,7 @@
         </property>
         <property name="defaultErrorView" value="error"/>
         <property name="exceptionAttribute" value="exception"/>
-    </bean-->
+    </bean>
     <!--bean name="app" class="com.dbalota.show.App" autowire="byName">
     </bean-->
 
