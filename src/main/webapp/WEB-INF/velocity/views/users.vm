@@ -49,6 +49,7 @@
         <th>Last Name</th>
         <th>Email</th>
         <th>Birthday</th>
+        <th>Accounts</th>
         <th>Delete</th>
     </tr>
 
@@ -65,6 +66,9 @@
         </td>
         <td>
             ${u.birthday}
+        </td>
+        <td>
+            <a href="users/${u.id}/accounts/">Accounts</a>
         </td>
         <td>
             <a href="users/delete/${u.id}">Delete</a>

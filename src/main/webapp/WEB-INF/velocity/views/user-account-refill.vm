@@ -1,0 +1,19 @@
+<h1>Account</h1>
+Balance for account $accountNumber is $balance
+<form method="post" >
+    <input type="hidden" name="${_csrf.parameterName}"
+           value="${_csrf.token}"/>
+    <table width="95%" bgcolor="f8f8ff" border="0" cellspacing="0" cellpadding="5">
+        <tr>
+            <td alignment="right" width="20%">Amount to add:</td>
+            <td width="20%">
+                <input type="number" name="amount" required ="required" value="" step="0.01" min="0">
+            </td>
+        </tr>
+    </table>
+    <br>
+    <input type="submit" alignment="center" value="Update">
+</form>
+
+
+

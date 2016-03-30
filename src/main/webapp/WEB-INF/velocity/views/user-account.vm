@@ -1,0 +1,57 @@
+<h1>User</h1>
+
+<table width="95%" bgcolor="f8f8ff" border="0" cellspacing="0" cellpadding="5">
+    <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Birthday</th>
+    </tr>
+    <tr>
+        <td>
+            ${user.firstName}
+        </td>
+        <td>
+            ${user.lastName}
+        </td>
+        <td>
+            ${user.email}
+        </td>
+        <td>
+            ${user.birthday}
+        </td>
+    </tr>
+</table>
+
+<h1>Accounts</h1>
+
+<table width="95%" bgcolor="f8f8ff" border="0" cellspacing="0" cellpadding="5">
+    <tr>
+        <th>Account Number</th>
+        <th>Balance</th>
+        <th>Refill</th>
+        <th>Delete</th>
+    </tr>
+
+    #foreach ($a in ${accounts})
+    <tr>
+        <td>
+            ${a.accountNumber}
+        </td>
+        <td>
+            ${a.balance}
+        </td>
+        <td>
+            <a href="${a.accountNumber}/refill">Refill</a>
+        </td>
+        <td>
+            <a href="${a.accountNumber}/delete">Delete</a>
+        </td>
+    </tr>
+    #end
+</table>
+
+<a href="create">Create account</a>
+
+
+

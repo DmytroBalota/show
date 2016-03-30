@@ -1,6 +1,6 @@
 -- --------------------------------------------------------
 -- Host:                         127.0.0.1
--- Server version:               5.7.11-log - MySQL Community Server (GPL)
+-- Server version:               5.5.23 - MySQL Community Server (GPL)
 -- Server OS:                    Win64
 -- HeidiSQL Version:             9.3.0.4984
 -- --------------------------------------------------------
@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS `counters` (
 /*!40000 ALTER TABLE `counters` DISABLE KEYS */;
 INSERT INTO `counters` (`name`, `number`) VALUES
 	('bookTicket', 4),
-	('getEventByName', 45),
+	('getEventByName', 96),
 	('getTicketPrice', 4);
 /*!40000 ALTER TABLE `counters` ENABLE KEYS */;
 
@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS `events` (
   KEY `id` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
--- Dumping data for table show.events: ~0 rows (approximately)
+-- Dumping data for table show.events: ~1 rows (approximately)
 /*!40000 ALTER TABLE `events` DISABLE KEYS */;
 INSERT INTO `events` (`id`, `name`, `price`, `duration`, `rating`) VALUES
 	(5, 'Saw', 100, 100, 'HIGH');
@@ -103,7 +103,7 @@ CREATE TABLE IF NOT EXISTS `persistent_logins` (
 -- Dumping data for table show.persistent_logins: ~0 rows (approximately)
 /*!40000 ALTER TABLE `persistent_logins` DISABLE KEYS */;
 INSERT INTO `persistent_logins` (`username`, `series`, `token`, `last_used`) VALUES
-	('Dmytro_Balota', 'xeL+oodYJQ27+P6iegfQlw==', 'ji5JwTJw42PydPU+xcF6gA==', '2016-03-28 23:56:58');
+	('Dmytro_Balota', 'rYZDtseW/t0xVMVSkBF46Q==', '1ZhqXjsF4HNhAsOW8pTptA==', '2016-03-30 16:46:54');
 /*!40000 ALTER TABLE `persistent_logins` ENABLE KEYS */;
 
 
@@ -148,13 +148,31 @@ CREATE TABLE IF NOT EXISTS `users` (
   KEY `id` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
--- Dumping data for table show.users: ~3 rows (approximately)
+-- Dumping data for table show.users: ~2 rows (approximately)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`id`, `firstName`, `lastName`, `email`, `birthday`, `password`, `roles`) VALUES
 	(2, 'Dmytro', 'Balota', 'dmytro_balota@epam.com', '1985-01-01 00:00:00', '$2a$10$EblZqNptyYvcLm/VwDCVAuBjzZOI7khzdyGPBr08PpIi0na624b8.', 'ROLE_RESGISTERED_USER'),
-	(4, 'Oleh', 'Faizulin', 'oleh_faizulin@epam.com', '1988-03-01 00:00:00', '$2a$10$EblZqNptyYvcLm/VwDCVAuBjzZOI7khzdyGPBr08PpIi0na624b8.', 'ROLE_RESGISTERED_USER,ROLE_BOOKING_MANAGER'),
-	(6, 'Dmytro', 'ASD', '321', '2016-03-01 00:00:00', '$2a$11$t6IBOjfqsPPbW5Lf3zaiBeWBKchzyIS9nh/hnFkkA1TH8my3P1BHq', 'ROLE_RESGISTERED_USER');
+	(4, 'Oleh', 'Faizulin', 'oleh_faizulin@epam.com', '1988-03-01 00:00:00', '$2a$10$EblZqNptyYvcLm/VwDCVAuBjzZOI7khzdyGPBr08PpIi0na624b8.', 'ROLE_RESGISTERED_USER,ROLE_BOOKING_MANAGER');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
+
+
+-- Dumping structure for table show.user_accounts
+DROP TABLE IF EXISTS `user_accounts`;
+CREATE TABLE IF NOT EXISTS `user_accounts` (
+  `accountNumber` bigint(20) NOT NULL AUTO_INCREMENT,
+  `userId` int(11) NOT NULL,
+  `balance` double NOT NULL DEFAULT '0',
+  PRIMARY KEY (`accountNumber`),
+  KEY `FK_user_accounts_users` (`userId`),
+  CONSTRAINT `FK_user_accounts_users` FOREIGN KEY (`userId`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=1000000001 DEFAULT CHARSET=latin1;
+
+-- Dumping data for table show.user_accounts: ~2 rows (approximately)
+/*!40000 ALTER TABLE `user_accounts` DISABLE KEYS */;
+INSERT INTO `user_accounts` (`accountNumber`, `userId`, `balance`) VALUES
+	(1000000001, 4, 333.33),
+	(1000000002, 2, 1888.11);
+/*!40000 ALTER TABLE `user_accounts` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
