@@ -5,14 +5,12 @@ import java.util.List;
 import java.util.Set;
 
 import com.dbalota.show.dao.BookingDao;
-import com.dbalota.show.models.Auditorium;
-import com.dbalota.show.models.Event;
-import com.dbalota.show.models.Ticket;
-import com.dbalota.show.models.User;
-import com.dbalota.show.services.AuditoriumService;
-import com.dbalota.show.services.BookingService;
-import com.dbalota.show.services.DiscountService;
-import com.dbalota.show.services.EventService;
+import com.dbalota.show.exceptions.NotEnoughMoneyException;
+import com.dbalota.show.models.*;
+import com.dbalota.show.services.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 public class BookingServiceImpl implements BookingService {
 
@@ -20,6 +18,8 @@ public class BookingServiceImpl implements BookingService {
     private BookingDao bookingDao;
     private AuditoriumService auditoriumService;
     private EventService eventService;
+    @Autowired
+    private UserAccountService userAccountService;
 
     private BookingServiceImpl() {
     }
@@ -54,11 +54,30 @@ public class BookingServiceImpl implements BookingService {
             return false;
         }
         double discount = discountService.getDiscount(user, ticket.getEvent(), ticket.getDate());
-        ticket.setPrice(ticket.getPrice() - ticket.getPrice() * (discount / 100));
+        double price = ticket.getPrice() - ticket.getPrice() * (discount / 100);
+
+        withdrawMoney(user, price);
+
+        ticket.setPrice(price);
         ticket.setUserId(user.getId());
         bookingDao.bookTicket(ticket);
 
         return true;
+    }
+
+    private void withdrawMoney(User user, double price) {
+        List<UserAccount> accounts = userAccountService.getUserAccounts(user.getId());
+        boolean withdrawFail = true;
+        for (UserAccount ua : accounts) {
+            if (ua.getBalance() >= price) {
+                userAccountService.withdrawAccount(ua.getAccountNumber(), price);
+                withdrawFail = false;
+                break;
+            }
+        }
+        if (withdrawFail) {
+            throw new NotEnoughMoneyException("User has not enough money on his accounts");
+        }
     }
 
     private boolean isAuditoriumFull(Auditorium auditorium, Date date) {
@@ -87,5 +106,9 @@ public class BookingServiceImpl implements BookingService {
 
     public void setEventService(EventService eventService) {
         this.eventService = eventService;
+    }
+
+    public void setUserAccountService(UserAccountService userAccountService) {
+        this.userAccountService = userAccountService;
     }
 }

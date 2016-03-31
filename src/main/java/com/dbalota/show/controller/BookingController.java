@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -84,6 +85,7 @@ public class BookingController {
     }
 
     @RequestMapping(value = "/booking/event/datelocation/{eventName}/{location}/{date}", method = RequestMethod.POST)
+    @Transactional
     public ModelAndView bookTicket(@PathVariable String eventName,
                                    @PathVariable String location,
                                    @PathVariable String date,
