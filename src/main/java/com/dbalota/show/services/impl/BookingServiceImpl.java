@@ -5,12 +5,12 @@ import java.util.List;
 import java.util.Set;
 
 import com.dbalota.show.dao.BookingDao;
+import com.dbalota.show.exceptions.NoEnoughSeatsException;
 import com.dbalota.show.exceptions.NotEnoughMoneyException;
+import com.dbalota.show.exceptions.SeatIsOccupiedException;
 import com.dbalota.show.models.*;
 import com.dbalota.show.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 public class BookingServiceImpl implements BookingService {
 
@@ -50,9 +50,8 @@ public class BookingServiceImpl implements BookingService {
     }
 
     public boolean bookTicket(User user, Ticket ticket) {
-        if (isAuditoriumFull(ticket.getAuditorium(), ticket.getDate())) {
-            return false;
-        }
+        verifySeat(ticket);
+
         double discount = discountService.getDiscount(user, ticket.getEvent(), ticket.getDate());
         double price = ticket.getPrice() - ticket.getPrice() * (discount / 100);
 
@@ -63,6 +62,19 @@ public class BookingServiceImpl implements BookingService {
         bookingDao.bookTicket(ticket);
 
         return true;
+    }
+
+    private void verifySeat(Ticket ticket) {
+        List<Ticket> tickets = bookingDao.getPurchasedTickets(ticket.getAuditorium(), ticket.getDate());
+        if (null != tickets && tickets.size() == ticket.getAuditorium().getSeatsNumber()) {
+            throw new NoEnoughSeatsException("There are no enough seats in the auditorium "
+                    + ticket.getAuditorium().getName());
+        }
+        for (Ticket t : tickets) {
+            if (t.getSeat() == ticket.getSeat()) {
+                throw new SeatIsOccupiedException(String.format("Seat %s is occupied.", t.getSeat()));
+            }
+        }
     }
 
     private void withdrawMoney(User user, double price) {
@@ -80,13 +92,6 @@ public class BookingServiceImpl implements BookingService {
         }
     }
 
-    private boolean isAuditoriumFull(Auditorium auditorium, Date date) {
-        List<Ticket> tickets = bookingDao.getPurchasedTickets(auditorium, date);
-        if (null != tickets && tickets.size() == auditorium.getSeatsNumber()) {
-            return true;
-        }
-        return false;
-    }
 
     public List<Ticket> getTicketsForEvent(Event event, Date date) {
         return bookingDao.getPurchasedTickets(auditoriumService.getAuditorium(eventService.getAuditoriumName(event.getId(), date)), date);
