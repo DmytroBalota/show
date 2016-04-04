@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -46,7 +48,7 @@ public class BookingController {
     private static DateFormat cdtf = new SimpleDateFormat(CLIENT_DATE_TIME_FORMAT);
 
     @RequestMapping(value = "/booking", method = RequestMethod.GET)
-    public ModelAndView eventsPage(@RequestParam(required = false) String date) throws ParseException {
+    public ModelAndView bookingPage(@RequestParam(required = false) String date) throws ParseException {
         Date d;
         if (date == null) {
             Calendar c = Calendar.getInstance();
@@ -74,7 +76,7 @@ public class BookingController {
     }
 
     @RequestMapping(value = "/booking/event/datelocation/{eventName}/{location}/{date}/bookedtickets", method = RequestMethod.GET)
-    private ModelAndView addToModdelBookedTickets(@PathVariable String eventName,
+    public ModelAndView bookedTickets(@PathVariable String eventName,
                                                   @PathVariable String date) throws ParseException {
 
         ModelAndView mv = new ModelAndView("booked-tickets");
@@ -85,8 +87,8 @@ public class BookingController {
     }
 
     @RequestMapping(value = "/booking/event/datelocation/{eventName}/{location}/{date}", method = RequestMethod.POST)
-    @Transactional
-    public ModelAndView bookTicket(@PathVariable String eventName,
+    @Transactional(isolation = Isolation.SERIALIZABLE, propagation = Propagation.REQUIRED)
+    public ModelAndView bookTickets(@PathVariable String eventName,
                                    @PathVariable String location,
                                    @PathVariable String date,
                                    @RequestParam long userId,
