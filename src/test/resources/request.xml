@@ -1,0 +1,9 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+                  xmlns:gs="http://dbalota.com/show/gs-producing-web-service">
+    <soapenv:Header/>
+    <soapenv:Body>
+        <gs:getEventRequest>
+            <gs:name>Saw</gs:name>
+        </gs:getEventRequest>
+    </soapenv:Body>
+</soapenv:Envelope>

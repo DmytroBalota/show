@@ -40,19 +40,19 @@ public class UserAccountController {
     @RequestMapping(value = "/users/{userId}/accounts/create", method = RequestMethod.GET)
     public ModelAndView userAccountCreate(@PathVariable long userId) {
         userAccountService.createAccount(userId);
-        return new ModelAndView("redirect:/users/" + userId + "/accounts/");
+        return new ModelAndView("redirect:/show/users/" + userId + "/accounts/");
     }
 
     @RequestMapping(value = "/users/{userId}/accounts/{accountNumber}/delete", method = RequestMethod.GET)
     public ModelAndView userAccountDelete(@PathVariable long userId, @PathVariable long accountNumber) {
         userAccountService.deleteAccount(accountNumber);
-        return new ModelAndView("redirect:/users/" + userId + "/accounts/");
+        return new ModelAndView("redirect:/show/users/" + userId + "/accounts/");
     }
 
     @RequestMapping(value = "/users/{userId}/accounts/{accountNumber}/refill", method = RequestMethod.POST)
     public ModelAndView userAccountRefill(@PathVariable long userId, @PathVariable long accountNumber,
                                           @RequestParam Double amount) {
         userAccountService.refill(accountNumber, amount);
-        return new ModelAndView("redirect:/users/" + userId + "/accounts/" + accountNumber + "/refill");
+        return new ModelAndView("redirect:/show/users/" + userId + "/accounts/" + accountNumber + "/refill");
     }
 }

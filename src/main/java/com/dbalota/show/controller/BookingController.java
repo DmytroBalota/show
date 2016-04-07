@@ -111,7 +111,7 @@ public class BookingController {
             bookingService.bookTicket(user, ticket);
         }
 
-        return new ModelAndView(String.format("redirect:/booking/event/datelocation/%s/%s/%s", eventName, location, date));
+        return new ModelAndView(String.format("redirect:/show/booking/event/datelocation/%s/%s/%s", eventName, location, date));
     }
 
 }

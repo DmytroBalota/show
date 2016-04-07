@@ -41,6 +41,6 @@ public class AuditoriumController {
     public ModelAndView removeAuditorium(@PathVariable String nameAuditoriumTodele) {
         Auditorium a = auditoriumService.getAuditorium(nameAuditoriumTodele);
         auditoriumService.delete(a);
-        return new ModelAndView("redirect:/auditoriums");
+        return new ModelAndView("redirect:/show/auditoriums");
     }
 }

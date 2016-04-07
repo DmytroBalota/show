@@ -64,13 +64,13 @@ public class EventController {
     ) {
         eventService.assignAuditorium(eventService.getByName(event),
                 auditoriumService.getAuditorium(auditorium), date);
-        return new ModelAndView("redirect:/events");
+        return new ModelAndView("redirect:/show/events");
     }
 
     @RequestMapping(value = "/events/delete/{nameEventTodele}")
     public ModelAndView removeAuditorium(@PathVariable String nameEventTodele) {
         eventService.remove(eventService.getByName(nameEventTodele));
-        return new ModelAndView("redirect:/events");
+        return new ModelAndView("redirect:/show/events");
     }
 
     @RequestMapping(value = "events/delete/assignAuditorium/{eventId}/{date}")
@@ -80,7 +80,7 @@ public class EventController {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        return new ModelAndView("redirect:/events");
+        return new ModelAndView("redirect:/show/events");
     }
 
 

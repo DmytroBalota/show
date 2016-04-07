@@ -1,22 +1,20 @@
 package com.dbalota.show.controller;
 
-import java.io.IOException;
-import java.security.Principal;
-import java.util.Date;
-
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
+import java.security.Principal;
+import java.util.Date;
+
 @Controller
 public class HomeController {
 
     @RequestMapping(value = "/")
-    public ModelAndView home(HttpServletResponse response) throws IOException {
+    public ModelAndView home() throws IOException {
         return new ModelAndView("home", "now", new Date());
     }
 

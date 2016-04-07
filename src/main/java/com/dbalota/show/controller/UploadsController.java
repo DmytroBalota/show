@@ -48,7 +48,7 @@ public class UploadsController {
             userService.register(u);
         }
 
-        return "redirect:/users";
+        return "redirect:/show/users";
     }
 
     @RequestMapping(value = "/uploads/events", method = RequestMethod.POST)
@@ -63,7 +63,7 @@ public class UploadsController {
             eventService.create(e);
         }
 
-        return "redirect:/events";
+        return "redirect:/show/events";
     }
 
 

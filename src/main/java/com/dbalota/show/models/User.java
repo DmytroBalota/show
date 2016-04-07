@@ -1,9 +1,11 @@
 package com.dbalota.show.models;
 
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
 
+@XmlRootElement
 public class User {
     private int id;
     private String firstName;
@@ -12,6 +14,9 @@ public class User {
     private Date birthday;
     private String password;
     private String roles;
+
+    public User() {
+    }
 
     public User(String firstName, String lastName) {
         this.firstName = firstName;
@@ -22,6 +27,7 @@ public class User {
         return birthday;
     }
 
+    @XmlElement
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
     }
@@ -67,6 +73,7 @@ public class User {
         return firstName;
     }
 
+    @XmlElement
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
@@ -75,6 +82,7 @@ public class User {
         return lastName;
     }
 
+    @XmlElement
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
@@ -96,6 +104,7 @@ public class User {
         return id;
     }
 
+    @XmlAttribute
     public void setId(int id) {
         this.id = id;
     }
@@ -104,6 +113,7 @@ public class User {
         return email;
     }
 
+    @XmlElement
     public void setEmail(String email) {
         this.email = email;
     }
@@ -120,6 +130,7 @@ public class User {
         return roles;
     }
 
+    @XmlElement
     public void setRoles(String roles) {
         this.roles = roles;
     }

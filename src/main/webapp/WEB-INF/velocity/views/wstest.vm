@@ -1,0 +1,7 @@
+<h3>Response from web server:</h3>
+<p>
+    <h4>Event</h4>
+    Event name: $wsresponse.name
+    <br>Event price: $wsresponse.price
+    <br>Event duration: $wsresponse.duration
+</p>

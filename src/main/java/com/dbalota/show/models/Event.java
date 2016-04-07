@@ -1,12 +1,20 @@
 package com.dbalota.show.models;
 
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
 import java.util.List;
 
 /**
  * Created by Dmytro_Balota on 2/5/2016.
  */
+@XmlRootElement
 public class Event {
+
+    public Event() {
+
+    }
 
     public Event(String name) {
         this.name = name;
@@ -16,7 +24,7 @@ public class Event {
         HIGH, MID, LOW;
     }
 
-    public static  class DateLocation{
+    public static class DateLocation {
         private String date;
         private String location;
 
@@ -55,6 +63,7 @@ public class Event {
         return duration;
     }
 
+    @XmlElement
     public void setDuration(int duration) {
         this.duration = duration;
     }
@@ -63,6 +72,7 @@ public class Event {
         return name;
     }
 
+    @XmlElement
     public void setName(String name) {
         this.name = name;
     }
@@ -71,6 +81,7 @@ public class Event {
         return price;
     }
 
+    @XmlElement
     public void setPrice(double price) {
         this.price = price;
     }
@@ -79,6 +90,7 @@ public class Event {
         return rating;
     }
 
+    @XmlElement
     public void setRating(Rating rating) {
         this.rating = rating;
     }
@@ -126,6 +138,7 @@ public class Event {
         return id;
     }
 
+    @XmlAttribute
     public void setId(int id) {
         this.id = id;
     }
