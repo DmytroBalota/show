@@ -22,12 +22,11 @@ public class User {
         this.firstName = firstName;
         this.lastName = lastName;
     }
-
+    @XmlElement
     public Date getBirthday() {
         return birthday;
     }
 
-    @XmlElement
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
     }
@@ -68,21 +67,20 @@ public class User {
             return false;
         return true;
     }
-
+    @XmlElement
     public String getFirstName() {
         return firstName;
     }
 
-    @XmlElement
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
+    @XmlElement
     public String getLastName() {
         return lastName;
     }
 
-    @XmlElement
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
@@ -100,11 +98,11 @@ public class User {
                 '}';
     }
 
+    @XmlElement
     public int getId() {
         return id;
     }
 
-    @XmlAttribute
     public void setId(int id) {
         this.id = id;
     }
@@ -126,11 +124,11 @@ public class User {
         this.password = password;
     }
 
+    @XmlElement
     public String getRoles() {
         return roles;
     }
 
-    @XmlElement
     public void setRoles(String roles) {
         this.roles = roles;
     }

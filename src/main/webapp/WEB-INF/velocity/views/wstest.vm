@@ -1,7 +1,15 @@
 <h3>Response from web server:</h3>
 <p>
-    <h4>Event</h4>
-    Event name: $wsresponse.name
-    <br>Event price: $wsresponse.price
-    <br>Event duration: $wsresponse.duration
+<h4>Event</h4>
+Name: $event.name
+<br>Price: $event.price
+<br>Duration: $event.duration
+</p>
+
+<p>
+<h4>User</h4>
+Fisrt name: $user.firstName
+<br>Last Name: $user.lastName
+<br>Email: $user.email
+<br>Birthday: ${user.birthday}
 </p>

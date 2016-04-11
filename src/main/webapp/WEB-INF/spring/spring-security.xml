@@ -16,12 +16,12 @@
         <!--intercept-url pattern="/booking*" access="hasRole('BOOKING_MANAGER')"></intercept-url-->
         <intercept-url pattern="/**" access="hasRole('RESGISTERED_USER')"></intercept-url>
         <form-login
-                login-page="/login"
+                login-page="/show/login/"
                 default-target-url="/"
-                authentication-failure-url="/login?error"
+                authentication-failure-url="/show/login?error"
                 username-parameter="username"
                 password-parameter="password"/>
-        <logout logout-success-url="/login?logout" logout-url="/logout"/>
+        <logout logout-success-url="/show/login?logout" logout-url="/show/logout"/>
 
         <access-denied-handler error-page="/403"/>
 

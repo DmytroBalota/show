@@ -7,5 +7,5 @@
     <a style="border:solid 1px; padding:10px;margin:5px;" href="#springUrl("/show/booking")">Booking</a>
     <a style="border:solid 1px; padding:10px;margin:5px;" href="#springUrl("/show/reports")">Reports</a>
     <a style="border:solid 1px; padding:10px;margin:5px;" href="#springUrl("/show/uploads")">Uploads</a>
-    <a style="border:solid 1px; padding:10px;margin:5px;" href="#springUrl("/show/wstest?eventName=Saw")">SOAP Test</a>
+    <a style="border:solid 1px; padding:10px;margin:5px;" href="#springUrl("/show/wstest?eventName=Saw&email=dmytro_balota@epam.com")">SOAP Test</a>
 </div>

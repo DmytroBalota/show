@@ -1,9 +1,7 @@
 package com.dbalota.show.models;
 
-import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -59,38 +57,38 @@ public class Event {
 
     private List<DateLocation> datesLocations;
 
+    @XmlElement
     public int getDuration() {
         return duration;
     }
 
-    @XmlElement
     public void setDuration(int duration) {
         this.duration = duration;
     }
 
+    @XmlElement
     public String getName() {
         return name;
     }
 
-    @XmlElement
     public void setName(String name) {
         this.name = name;
     }
 
+    @XmlElement
     public double getPrice() {
         return price;
     }
 
-    @XmlElement
     public void setPrice(double price) {
         this.price = price;
     }
 
+    @XmlElement
     public Rating getRating() {
         return rating;
     }
 
-    @XmlElement
     public void setRating(Rating rating) {
         this.rating = rating;
     }
@@ -134,11 +132,11 @@ public class Event {
                 + "]";
     }
 
+    @XmlElement
     public int getId() {
         return id;
     }
 
-    @XmlAttribute
     public void setId(int id) {
         this.id = id;
     }
