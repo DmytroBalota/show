@@ -55,7 +55,7 @@ public class UserController {
     @RequestMapping(value = "users/delete/{userId}")
     public ModelAndView removeUser(@PathVariable long userId) {
         userService.remove(userService.getById(userId));
-        return new ModelAndView("redirect:/users");
+        return new ModelAndView("redirect:/show/users");
     }
 
     @InitBinder
