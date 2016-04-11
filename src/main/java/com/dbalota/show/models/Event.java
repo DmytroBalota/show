@@ -1,12 +1,12 @@
 package com.dbalota.show.models;
 
-import java.util.Date;
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Dmytro_Balota on 2/5/2016.
  */
-public class Event {
+public class Event implements Serializable {
 
     public Event(String name) {
         this.name = name;

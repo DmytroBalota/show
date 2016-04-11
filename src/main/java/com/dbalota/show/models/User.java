@@ -1,10 +1,9 @@
 package com.dbalota.show.models;
 
+import java.io.Serializable;
 import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
 
-public class User {
+public class User implements Serializable {
     private int id;
     private String firstName;
     private String lastName;
@@ -12,6 +11,9 @@ public class User {
     private Date birthday;
     private String password;
     private String roles;
+
+    public User() {
+    }
 
     public User(String firstName, String lastName) {
         this.firstName = firstName;

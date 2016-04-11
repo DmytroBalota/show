@@ -11,6 +11,6 @@ import org.springframework.web.servlet.ModelAndView;
 public class ExceptionController {
     @ExceptionHandler(value = Exception.class)
     public ModelAndView onServerException(Exception e) {
-        return new ModelAndView("error", "errorMessage", e.getMessage());
+        return new ModelAndView("error", "exception", e);
     }
 }

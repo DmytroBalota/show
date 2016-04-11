@@ -38,16 +38,8 @@ public class UserController {
 
 
     @RequestMapping(value = "/users", method = RequestMethod.POST)
-    public ModelAndView addUser(@RequestParam String firstName,
-                                @RequestParam String lastName,
-                                @RequestParam String password,
-                                @RequestParam String email,
-                                @RequestParam Date birthday
+    public ModelAndView addUser(@ModelAttribute User user
     ) {
-        User user = new User(firstName, lastName);
-        user.setEmail(email);
-        user.setBirthday(birthday);
-        user.setPassword(encoder.encode(password));
         userService.register(user);
         return new ModelAndView("users", "usersList", userService.getAll());
     }
