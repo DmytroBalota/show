@@ -1,15 +1,9 @@
 package com.dbalota.show;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-
 import com.dbalota.show.aspects.CounterAspect;
 import com.dbalota.show.aspects.DiscountAspect;
 import com.dbalota.show.models.Auditorium;
+import com.dbalota.show.models.Event;
 import com.dbalota.show.models.Ticket;
 import com.dbalota.show.models.User;
 import com.dbalota.show.services.AuditoriumService;
@@ -20,7 +14,12 @@ import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.dbalota.show.models.Event;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Main {
     private static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm";

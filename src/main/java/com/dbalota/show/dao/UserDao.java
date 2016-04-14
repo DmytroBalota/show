@@ -53,4 +53,10 @@ public class UserDao {
     public User getUserByNameSurname(String firstName, String lastName) {
         return jdbcTemplate.queryForObject("select * from users where firstName = ? and lastName = ?", new Object[]{firstName, lastName}, new UserRowMapper());
     }
+
+    public void edit(User user) {
+        jdbcTemplate.update("update users set firstName = ?, lastName = ?, email = ?, birthday = ?, password = ? " +
+                        "where id = ?", user.getFirstName()
+                , user.getLastName(), user.getEmail(), user.getBirthday(), user.getPassword(), user.getId());
+    }
 }

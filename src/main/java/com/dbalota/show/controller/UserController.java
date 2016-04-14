@@ -44,7 +44,16 @@ public class UserController {
     @ResponseBody
     @RequestMapping(value = "/users", method = RequestMethod.POST)
     public User addUser(@ModelAttribute User user) {
+        user.setPassword(encoder.encode(user.getPassword()));
         userService.register(user);
+        return user;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/users/update", method = RequestMethod.POST)
+    public User editUser(@ModelAttribute User user) {
+        user.setPassword(encoder.encode(user.getPassword()));
+        userService.edit(user);
         return user;
     }
 

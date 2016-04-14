@@ -21,4 +21,6 @@ public interface UserService {
     List<User> getAll();
 
     User getUserByNameSurname(String firstName, String lastName);
+
+    void edit(User user);
 }

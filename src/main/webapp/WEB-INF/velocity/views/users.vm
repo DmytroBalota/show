@@ -33,10 +33,12 @@
                 <input type="date" name="birthday" min="1900-01-01" value="">
             </td>
         </tr>
-
     </table>
     <br>
+    <input type="hidden" name="id" min="0" value="0">
+
     <input type="button" alignment="center" value="Add" onclick="addUser();">
+    <input type="button" alignment="center" value="Save Edit" onclick="saveEditUser();">
 </form>
 
 
@@ -82,13 +84,31 @@
     $(document).ready(function(){
 
     });
+
     function getUser(id){
          $.get("users/"+id, function(user, status){
             $("input[name='firstName']").val(user.firstName);
             $("input[name='lastName']").val(user.lastName);
             $("input[name='birthday']").val(user.birthday);
             $("input[name='email']").val(user.email);
+            $("input[name='id']").val(user.id);
         });
+    }
+    function saveEditUser(){
+         var values = {};
+            $.each($('#userForm').serializeArray(), function(i, field) {
+                values[field.name] = field.value;
+            });
+            $.post("users/update",
+                values,
+                function(user, status){
+                    if(user.id){
+                        location.reload();
+                    }else{
+                        alert("Error")
+                    }
+                }
+            );
     }
     function addUser(){
          var values = {};
