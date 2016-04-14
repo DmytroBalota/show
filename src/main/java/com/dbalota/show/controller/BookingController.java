@@ -8,8 +8,6 @@ import com.dbalota.show.services.BookingService;
 import com.dbalota.show.services.EventService;
 import com.dbalota.show.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -113,5 +111,12 @@ public class BookingController {
 
         return new ModelAndView(String.format("redirect:/booking/event/datelocation/%s/%s/%s", eventName, location, date));
     }
+    @ResponseBody
+    @RequestMapping(value = "/booking/event/datelocation/{eventName}/{location}/{date}/boughttickets", method = RequestMethod.GET)
+    public List<Ticket> bookedTicket(@PathVariable String eventName,
+                                      @PathVariable String date) throws ParseException {
 
+        List<Ticket> bookedTickets = bookingService.getTicketsForEvent(eventService.getByName(eventName), dtf.parse(date));
+        return bookedTickets;
+    }
 }

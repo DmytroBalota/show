@@ -35,13 +35,17 @@ public class UserController {
         return new ModelAndView("users", "usersList", userService.getAll());
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/users/{id}", method = RequestMethod.GET)
+    public User getUser(@PathVariable long id) {
+        return userService.getById(id);
+    }
 
-
+    @ResponseBody
     @RequestMapping(value = "/users", method = RequestMethod.POST)
-    public ModelAndView addUser(@ModelAttribute User user
-    ) {
+    public User addUser(@ModelAttribute User user) {
         userService.register(user);
-        return new ModelAndView("users", "usersList", userService.getAll());
+        return user;
     }
 
     @RequestMapping(value = "users/delete/{userId}")

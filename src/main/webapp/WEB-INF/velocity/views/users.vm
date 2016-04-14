@@ -1,5 +1,5 @@
 <h1>#springMessage("user.add")</h1>
-<form method="post"  enctype="application/json">
+<form id="userForm" method="post"  enctype="application/json">
     <input type="hidden" name="${_csrf.parameterName}"
            value="${_csrf.token}"/>
     <table width="95%" bgcolor="f8f8ff" border="0" cellspacing="0" cellpadding="5">
@@ -36,14 +36,14 @@
 
     </table>
     <br>
-    <input type="submit" alignment="center" value="Add">
+    <input type="button" alignment="center" value="Add" onclick="addUser();">
 </form>
 
 
 <h1>#springMessage("users")</h1>
 
 
-<table width="95%" bgcolor="f8f8ff" border="0" cellspacing="0" cellpadding="5">
+<table id="usersList" width="95%" bgcolor="f8f8ff" border="0" cellspacing="0" cellpadding="5">
     <tr>
         <th>First Name</th>
         <th>Last Name</th>
@@ -71,11 +71,63 @@
             <a href="users/${u.id}/accounts/">Accounts</a>
         </td>
         <td>
+            <a href="#" onclick="getUser(${u.id});">Edit</a>
             <a href="users/delete/${u.id}">Delete</a>
         </td>
     </tr>
     #end
 </table>
 
+<script language="JavaScript">
+    $(document).ready(function(){
+
+    });
+    function getUser(id){
+         $.get("users/"+id, function(user, status){
+            $("input[name='firstName']").val(user.firstName);
+            $("input[name='lastName']").val(user.lastName);
+            $("input[name='birthday']").val(user.birthday);
+            $("input[name='email']").val(user.email);
+        });
+    }
+    function addUser(){
+         var values = {};
+            $.each($('#userForm').serializeArray(), function(i, field) {
+                values[field.name] = field.value;
+            });
+         $.post("users",
+            values,
+            function(user, status){
+                if(user.id){
+                    $('#usersList').find('tbody')
+                        .append($('<tr>')
+                            .append($('<td>')
+                                .text(user.firstName)
+                            ).append($('<td>')
+                                .text(user.lastName)
+                            ).append($('<td>')
+                                .text(user.email)
+                            ).append($('<td>')
+                                .text(user.birthday)
+                            )
+                            .append($('<td>')
+                                .append($('<a>')
+                                    .attr('href', 'users/'+user.id+'/accounts/')
+                                    .text('Accounts')
+                                )
+                            )
+                            .append($('<td>')
+                                .append($('<a>')
+                                    .attr('href', 'users/delete/'+user.id)
+                                    .text('Delete')
+                                )
+                            )
+                    );
+                }else{
+                    alert("Error")
+                }
+            });
+    }
+</script>
 
 

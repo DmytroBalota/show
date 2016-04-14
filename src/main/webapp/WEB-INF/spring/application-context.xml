@@ -22,9 +22,15 @@
     <context:annotation-config/>
     <context:component-scan
             base-package="com.dbalota.show"/>
+
+    <mvc:resources mapping="/resources/**" location="/resources/" />
+
     <mvc:annotation-driven>
         <mvc:message-converters>
             <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
+            <!--PDF View -->
+            <bean class="com.dbalota.show.converter.TicketPdfConverter"/>
+
             <bean class="org.springframework.http.converter.FormHttpMessageConverter"/>
         </mvc:message-converters>
     </mvc:annotation-driven>
@@ -72,20 +78,39 @@
 
 
     <!-- Resolvers -->
+    <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+        <property name="order" value="1"/>
+        <property name="contentNegotiationManager">
+            <bean class="org.springframework.web.accept.ContentNegotiationManager">
+                <constructor-arg>
+                    <bean class="org.springframework.web.accept.PathExtensionContentNegotiationStrategy">
+                        <constructor-arg>
+                            <map>
+                                <entry key="pdf" value="application/pdf"/>
+                                <entry key="json" value="application/json"/>
+                            </map>
+                        </constructor-arg>
+                    </bean>
+                </constructor-arg>
+            </bean>
+        </property>
+
+        <property name="defaultViews">
+            <list>
+                <!-- JSON View -->
+                <bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>
+            </list>
+        </property>
+
+    </bean>
 
     <bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
         <property name="defaultLocale" value="en_US"/>
     </bean>
 
-    <bean id="velocityConfig"
-          class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
-        <property name="resourceLoaderPath">
-            <value>/WEB-INF/velocity/</value>
-        </property>
-    </bean>
-
     <bean id="viewResolver"
           class="org.springframework.web.servlet.view.velocity.VelocityLayoutViewResolver">
+        <property name="order" value="2"/>
         <property name="cache" value="true"/>
         <property name="prefix" value="/views/"/>
         <property name="layoutUrl" value="layouts/layout.vm"/>
@@ -102,6 +127,13 @@
                     <ref bean="vLinkTool"/>
                 </entry>
             </map>
+        </property>
+    </bean>
+
+    <bean id="velocityConfig"
+          class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
+        <property name="resourceLoaderPath">
+            <value>/WEB-INF/velocity/</value>
         </property>
     </bean>
 

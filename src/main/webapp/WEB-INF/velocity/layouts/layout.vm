@@ -1,5 +1,6 @@
 <html>
 <head>
+    <script src="/show/resources/js/jquery-2.2.3.js"></script>
     <title>Show</title>
 </head>
 <body>
