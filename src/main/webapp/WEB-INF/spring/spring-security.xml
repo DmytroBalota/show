@@ -14,6 +14,8 @@
         <intercept-url pattern="/logout" access="permitAll"></intercept-url>
         <intercept-url pattern="/resources/js/*" access="permitAll"></intercept-url>
         <intercept-url pattern="/resources/css/*" access="permitAll"></intercept-url>
+        <intercept-url pattern="/resttemplatetest/usersbookedtickets/*" access="permitAll"></intercept-url>
+
         <!--intercept-url pattern="/booking*" access="hasRole('BOOKING_MANAGER')"></intercept-url-->
         <intercept-url pattern="/**" access="hasRole('RESGISTERED_USER')"></intercept-url>
         <form-login

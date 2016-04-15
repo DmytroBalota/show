@@ -1,0 +1,55 @@
+<h1>Rest Template Test</h1>
+
+<form action="reports/usersBookedTickets" accept='application/pdf' method="post">
+    <input type="hidden" name="${_csrf.parameterName}"
+           value="${_csrf.token}"/>
+    <table width="95%" bgcolor="f8f8ff" border="0" cellspacing="0" cellpadding="5">
+        <tr>
+            <td alignment="right" width="20%">User:</td>
+            <td width="20%">
+                <select name="userId" value="">
+                    #foreach ($user in ${users})
+                    <option value="${user.id}">${user.firstName} ${user.lastName}</option>
+                    #end
+                </select>
+            </td>
+        </tr>
+
+    </table>
+    <br>
+    <input type="button" alignment="center" value="Get Booked Tickets" onclick="getBookedTickets();">
+</form>
+<table id="ticketsList" width="95%" bgcolor="f8f8ff" border="0" cellspacing="0" cellpadding="5">
+    <tr>
+        <th>Auditorium</th>
+        <th>Date</th>
+        <th>Price</th>
+        <th>Seat</th>
+    </tr>
+</table>
+
+<script language="JavaScript">
+
+    function getBookedTickets(){
+         $.get("resttemplatetest/usersbookedtickets?userId="+$("select[name='userId']").val(), function(tickets, status){
+         var tbody = $('#ticketsList').find('tbody');
+         var ticket;
+         $("#ticketsList tr:not(:first)").remove();
+            for(var i = 0; i < tickets.length; i++){
+                ticket = tickets[i];
+                tbody.append($('<tr>')
+                            .append($('<td>')
+                                .text(ticket.auditoriumName)
+                            ).append($('<td>')
+                                .text(new Date(ticket.date))
+                            ).append($('<td>')
+                                .text(ticket.price)
+                            ).append($('<td>')
+                                .text(ticket.seat)
+                            ));
+            }
+        });
+    }
+</script>
+
+

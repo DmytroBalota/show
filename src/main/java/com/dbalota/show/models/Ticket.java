@@ -1,11 +1,12 @@
 package com.dbalota.show.models;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by Dmytro_Balota on 2/5/2016.
  */
-public class Ticket {
+public class Ticket implements Serializable{
     private int id;
     private double price;
     private String auditoriumName;

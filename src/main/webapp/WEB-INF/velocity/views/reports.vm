@@ -17,7 +17,7 @@
 
     </table>
     <br>
-    <input type="submit" alignment="center" value="Get Report">
+    <input type="submit" alignment="center" value="Get Booked Tickets">
 </form>
 
 

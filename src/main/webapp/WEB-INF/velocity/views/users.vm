@@ -102,11 +102,11 @@
             $.post("users/update",
                 values,
                 function(user, status){
-                    if(user.id){
+                    if(status=='success'){
                         location.reload();
-                    }else{
-                        alert("Error")
-                    }
+                    }}else{
+                    alert("Error")
+                }
                 }
             );
     }
